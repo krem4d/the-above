@@ -19,12 +19,15 @@ before UI work is needed anymore.
 ## Current status (as of 2026-07-12)
 
 Milestones complete: **M0** (toolchain/skeleton), **M1** (pipeline risk burn-down), **M-STORY** (full
-3-act story bible + all Act 1 `.scene` scripts, EN+TR), **M2** (core narrative systems + UI slice).
+3-act story bible + all Act 1 `.scene` scripts, EN+TR), **M2** (core narrative systems + UI slice),
+**M3** (spectrogram/Waterfall mechanic v1 — the `spectro` DSL command now runs a real minigame).
 
-Next up: **M3** (spectrogram/Waterfall mechanic v1).
+Next up: **M4** (day-loop scaffolding: mission-gated room transitions, allowed_exits, HUD objectives).
 
-5 commits on `master`:
+M3 is committed on branch **`feat/m3-waterfall`** (all GdUnit4 tests green), **not yet merged to
+`master`**. `master`'s log ends at the CLAUDE.md onboarding commit:
 ```
+48ef7f2 docs: add project CLAUDE.md for session onboarding
 939f122 feat: M2 core narrative systems
 f4671d6 feat: dialogue UI widgets + Turkish-safe pixel font (M2 UI slice)
 9870995 feat: full story bible + Act 1 scripts, EN+TR complete
@@ -141,6 +144,37 @@ spectro sig_first_anomaly
 mode free_roam
 mission d2_find_logbook
 ```
+
+## Spectrogram / waterfall minigame (M3)
+
+The `spectro <id>` DSL command runs a real minigame (was a no-op stub through M2). Same pure-logic /
+presentation split as the DSL: `WaterfallSession` (`game/scripts/systems/waterfall_session.gd`) is
+engine-free per-session state, unit-tested like `DialogueParser`; `WaterfallView`
+(`game/scripts/ui/waterfall_view.gd` + `scenes/minigames/waterfall_view.tscn`) is the Control that
+mirrors `ChoiceMenu`'s contract exactly — `start_session()` shows it, `DialogueRunner` awaits
+`session_closed` the way it awaits `ChoiceMenu.chosen`. `WaterfallCanvas` draws the scrolling
+spectrogram procedurally (live data-viz, outside artgen's palette enforcement, but still only paints
+signal-magenta `#ff2fd6` for the trace — never decoratively).
+
+Session configs live in `game/story/signals/spectro_sessions.json` (parsed by
+`WaterfallSessionLibrary`), keyed by the exact `spectro <id>` used in the Act 1 `.scene` files — a
+GdUnit4 test asserts every referenced id exists and that each session can actually render its trace
+when tuned (guards the "whole mechanic silently dead" regression class). `kind` selects the win
+condition: `tutorial` (tune+hold), `beam_scan` (visit all 3 beams — `signal_beam` is a live gate
+*only here*, the "beam 2 only" fault), `onoff` (see both states), and `broadcast`/`taxonomy`/
+`answer_gate`/`keystone` (timed; distinct only as narrative tags). `cell_seconds > 0` gives the
+canon 11-minute broadcast a visible, countable on/off cadence.
+
+`_do_spectro` (DialogueRunner) enters `MINIGAME` mode, runs the session, restores the prior mode, and
+writes `spectro_<id>_done` (bool) into GameState so later `.scene` content can branch on it. **Design
+law wiring:** no minigame is a fail state — `cancel` always closes; and the ANSWER verb (own dedicated
+`answer` input, keycode R — never `interact`/`cancel`, so it can't be mashed into) is gated by the
+per-session `answer_available` flag, which **no Act 1 session enables** — Day 5's transgression answer
+is authored as a *dialogue choice* in `d5_observatory.scene` (`setflag answered_signal`, read by
+`d7_observatory.scene`). The `answer_available` path is a documented, tested, reserved capability for a
+future console-native ANSWER (same "wired-later stub" pattern as `AudioManager`); enabling it on a
+session without also feeding the canonical narrative flag would create a phantom answer the story never
+reads (an adversarial review caught exactly that and it was reverted).
 
 ## Save / meta-persistence
 

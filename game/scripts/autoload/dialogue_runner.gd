@@ -1,18 +1,24 @@
 extends Node
 ## Autoload: await-based coroutine executing DialogueParser output against
-## DialogueBox/ChoiceMenu/GameState/Locale/SceneDirector/AudioManager
-## (plan section 5). No threads — every DSL command is one `await` step.
+## DialogueBox/ChoiceMenu/WaterfallView/GameState/Locale/SceneDirector/
+## AudioManager (plan section 5). No threads — every DSL command is one
+## `await` step.
 ##
 ## setup_ui() must be called once by main.gd before run_scene()/run_parsed()
 ## — see the SceneDirector.world_holder comment for why this can't be an
 ## @onready absolute path (autoloads _ready() before the main scene exists).
 
+const SPECTRO_LIBRARY_PATH := "res://story/signals/spectro_sessions.json"
+
 var dialogue_box: DialogueBox = null
 var choice_menu: ChoiceMenu = null
 var fade_rect: ColorRect = null
+var waterfall_view: WaterfallView = null
 
 var _running := false
 var _mode_names: Dictionary = {}
+var _spectro_sessions: Dictionary = {}
+var _spectro_loaded := false
 
 
 func _ready() -> void:
@@ -24,10 +30,11 @@ func _ready() -> void:
 	}
 
 
-func setup_ui(box: DialogueBox, menu: ChoiceMenu, fade: ColorRect) -> void:
+func setup_ui(box: DialogueBox, menu: ChoiceMenu, fade: ColorRect, waterfall: WaterfallView) -> void:
 	dialogue_box = box
 	choice_menu = menu
 	fade_rect = fade
+	waterfall_view = waterfall
 	dialogue_box.hide_box()
 
 
@@ -114,7 +121,7 @@ func _step(ip: int, instructions: Array, labels: Dictionary) -> int:
 	elif cmd == "fade":
 		await _do_fade(instr)
 	elif cmd == "spectro":
-		push_warning("DialogueRunner: spectro '%s' is M3 scope, skipping" % instr["arg"])
+		await _do_spectro(instr)
 	elif cmd == "mode":
 		_do_mode(instr)
 	elif cmd == "mission":
@@ -239,6 +246,52 @@ func _do_fade(instr: Dictionary) -> void:
 	var tween := create_tween()
 	tween.tween_property(fade_rect, "color:a", target_alpha, instr["seconds"])
 	await tween.finished
+
+
+## Runs one spectro minigame (M3) to completion and folds the result into
+## GameState as spectro_<id>_done (bool), so a later day's .scene content can
+## branch on it with `if`/`else`. For sessions that opt into the reserved
+## ANSWER capability (answer_available — none in Act 1; Day 5's answer is a
+## dialogue choice in d5_observatory.scene) it also writes
+## spectro_<id>_answered. Unknown ids and a missing waterfall_view both
+## push_warning and no-op — dev-content gap, never a crash (matches every
+## other DialogueRunner command).
+func _do_spectro(instr: Dictionary) -> void:
+	var session_id: String = instr["arg"]
+	var config := _get_spectro_config(session_id)
+	if config.is_empty():
+		push_warning("DialogueRunner: spectro — unknown session '%s'" % session_id)
+		return
+	if waterfall_view == null:
+		push_warning("DialogueRunner: spectro '%s' — no waterfall_view set" % session_id)
+		return
+	var previous_mode: int = SceneDirector.mode
+	SceneDirector.mode = SceneDirector.ControlMode.MINIGAME
+	waterfall_view.start_session(session_id, config)
+	var result: Dictionary = await waterfall_view.session_closed
+	SceneDirector.mode = previous_mode
+	GameState.set_flag("spectro_%s_done" % session_id, bool(result.get("objective_met", false)))
+	if bool(config.get("answer_available", false)):
+		GameState.set_flag("spectro_%s_answered" % session_id, bool(result.get("answered", false)))
+
+
+func _get_spectro_config(session_id: String) -> Dictionary:
+	if not _spectro_loaded:
+		_spectro_sessions = _load_spectro_sessions()
+		_spectro_loaded = true
+	return WaterfallSessionLibrary.get_session_config(_spectro_sessions, session_id)
+
+
+func _load_spectro_sessions() -> Dictionary:
+	if not FileAccess.file_exists(SPECTRO_LIBRARY_PATH):
+		push_warning("DialogueRunner: spectro library not found at %s" % SPECTRO_LIBRARY_PATH)
+		return {}
+	var text := FileAccess.get_file_as_string(SPECTRO_LIBRARY_PATH)
+	var parsed := WaterfallSessionLibrary.parse(text)
+	if not parsed["ok"]:
+		push_warning("DialogueRunner: spectro library parse error: %s" % parsed["error"])
+		return {}
+	return parsed["sessions"]
 
 
 func _do_mode(instr: Dictionary) -> void:

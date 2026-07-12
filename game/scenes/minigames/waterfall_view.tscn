@@ -1,0 +1,118 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/waterfall_view.gd" id="1_wfview"]
+[ext_resource type="Script" path="res://scripts/ui/waterfall_canvas.gd" id="2_wfcanvas"]
+[ext_resource type="FontFile" path="res://assets/fonts/PixelOperator.ttf" id="3_fontr"]
+[ext_resource type="FontFile" path="res://assets/fonts/PixelOperator-Bold.ttf" id="4_fontb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.043, 0.043, 0.071, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.863, 0.831, 0.761, 1)
+
+[node name="WaterfallView" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_wfview")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Layout" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="PromptLabel" type="Label" parent="Panel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.765, 0.49, 1)
+theme_override_fonts/font = ExtResource("4_fontb")
+theme_override_font_sizes/font_size = 16
+text = ""
+
+[node name="WaterfallCanvas" type="Control" parent="Panel/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("2_wfcanvas")
+
+[node name="InfoRow" type="HBoxContainer" parent="Panel/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="FreqLabel" type="Label" parent="Panel/Layout/InfoRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.863, 0.831, 0.761, 1)
+theme_override_fonts/font = ExtResource("3_fontr")
+theme_override_font_sizes/font_size = 16
+text = ""
+
+[node name="ContextLabel" type="Label" parent="Panel/Layout/InfoRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.863, 0.831, 0.761, 1)
+theme_override_fonts/font = ExtResource("3_fontr")
+theme_override_font_sizes/font_size = 16
+text = ""
+
+[node name="TaxonomyLabel" type="Label" parent="Panel/Layout/InfoRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.243, 0.902, 0.541, 1)
+theme_override_fonts/font = ExtResource("4_fontb")
+theme_override_font_sizes/font_size = 16
+text = ""
+
+[node name="HintRow" type="HBoxContainer" parent="Panel/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="VerbHintLabel" type="Label" parent="Panel/Layout/HintRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.89, 0.647, 0.357, 1)
+theme_override_fonts/font = ExtResource("3_fontr")
+theme_override_font_sizes/font_size = 16
+text = ""
+
+[node name="AnswerHintLabel" type="Label" parent="Panel/Layout/HintRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1.0, 0.184, 0.839, 1)
+theme_override_fonts/font = ExtResource("3_fontr")
+theme_override_font_sizes/font_size = 16
+text = ""
+
+[node name="ExitHintLabel" type="Label" parent="Panel/Layout/HintRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+theme_override_colors/font_color = Color(0.69, 0.659, 0.565, 1)
+theme_override_fonts/font = ExtResource("3_fontr")
+theme_override_font_sizes/font_size = 16
+text = ""

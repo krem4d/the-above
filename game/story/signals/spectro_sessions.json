@@ -1,0 +1,105 @@
+{
+  "notes": "M3 spectrogram/waterfall session manifest. Keyed by the exact <id> in every `spectro <id>` line across game/story/scripts/act1/*.scene. Parsed by WaterfallSessionLibrary, consumed by WaterfallSession (game/scripts/systems/). T1's canon frequency is 1421.6 MHz, drift -0.11 Hz/s, beam 2 only (story/secret-bible.md IX) -- cal_pulsar deliberately uses a different frequency (1400.0 MHz) since it is mundane calibration work, not T1. signal_beam is only a live gate for the beam_scan kind (the 'beam 2 only' discovery); on the other T1 sessions it is canon annotation. cell_seconds drives a visible, countable on/off cadence (canon 11-minute cells, bible D2-S5); 0 = steady trace. answer_available is deliberately OMITTED on every Act 1 session: Day 5's transgression answer is authored as a dialogue choice in d5_observatory.scene (setflag answered_signal, read by d7_observatory.scene). The answer_available capability is reserved for a future console-native ANSWER verb.",
+  "sessions": {
+    "cal_pulsar": {
+      "kind": "tutorial",
+      "target_freq_mhz": 1400.0,
+      "tolerance_mhz": 0.5,
+      "freq_min_mhz": 1390.0,
+      "freq_max_mhz": 1410.0,
+      "start_freq_mhz": 1391.0,
+      "hold_seconds": 1.5,
+      "duration_seconds": 30.0,
+      "primary_verb": "listen",
+      "answer_available": false,
+      "prompt_key": "spectro.cal_pulsar.prompt"
+    },
+    "sig_beam_check": {
+      "kind": "beam_scan",
+      "target_freq_mhz": 1421.6,
+      "tolerance_mhz": 0.5,
+      "freq_min_mhz": 1411.6,
+      "freq_max_mhz": 1431.6,
+      "start_freq_mhz": 1421.6,
+      "start_beam": 1,
+      "signal_beam": 2,
+      "duration_seconds": 40.0,
+      "primary_verb": "log",
+      "answer_available": false,
+      "prompt_key": "spectro.sig_beam_check.prompt"
+    },
+    "sig_first_listen": {
+      "kind": "broadcast",
+      "target_freq_mhz": 1421.6,
+      "tolerance_mhz": 0.5,
+      "freq_min_mhz": 1411.6,
+      "freq_max_mhz": 1431.6,
+      "start_freq_mhz": 1421.6,
+      "signal_beam": 2,
+      "cell_seconds": 11.0,
+      "duration_seconds": 22.0,
+      "primary_verb": "listen",
+      "answer_available": false,
+      "prompt_key": "spectro.sig_first_listen.prompt"
+    },
+    "sig_onoff_test": {
+      "kind": "onoff",
+      "target_freq_mhz": 1421.6,
+      "tolerance_mhz": 0.5,
+      "freq_min_mhz": 1411.6,
+      "freq_max_mhz": 1431.6,
+      "start_freq_mhz": 1421.6,
+      "start_on_source": true,
+      "duration_seconds": 30.0,
+      "primary_verb": "log",
+      "answer_available": false,
+      "prompt_key": "spectro.sig_onoff_test.prompt"
+    },
+    "sig_taxonomy": {
+      "kind": "taxonomy",
+      "target_freq_mhz": 1421.6,
+      "tolerance_mhz": 0.5,
+      "freq_min_mhz": 1411.6,
+      "freq_max_mhz": 1431.6,
+      "start_freq_mhz": 1421.6,
+      "signal_beam": 2,
+      "duration_seconds": 32.0,
+      "primary_verb": "listen",
+      "answer_available": false,
+      "segments": [
+        { "at_seconds": 0.0, "label_key": "spectro.taxonomy.dawn_song" },
+        { "at_seconds": 8.0, "label_key": "spectro.taxonomy.contact_call" },
+        { "at_seconds": 16.0, "label_key": "spectro.taxonomy.mimic_phrase" },
+        { "at_seconds": 24.0, "label_key": "spectro.taxonomy.counting_song" }
+      ],
+      "prompt_key": "spectro.sig_taxonomy.prompt"
+    },
+    "sig_cell_listen": {
+      "kind": "answer_gate",
+      "target_freq_mhz": 1421.6,
+      "tolerance_mhz": 0.5,
+      "freq_min_mhz": 1411.6,
+      "freq_max_mhz": 1431.6,
+      "start_freq_mhz": 1421.6,
+      "signal_beam": 2,
+      "cell_seconds": 11.0,
+      "duration_seconds": 22.0,
+      "primary_verb": "listen",
+      "answer_available": false,
+      "prompt_key": "spectro.sig_cell_listen.prompt"
+    },
+    "sig_long_call": {
+      "kind": "keystone",
+      "target_freq_mhz": 1421.6,
+      "tolerance_mhz": 0.5,
+      "freq_min_mhz": 1411.6,
+      "freq_max_mhz": 1431.6,
+      "start_freq_mhz": 1421.6,
+      "signal_beam": 2,
+      "duration_seconds": 34.0,
+      "primary_verb": "record",
+      "answer_available": false,
+      "prompt_key": "spectro.sig_long_call.prompt"
+    }
+  }
+}

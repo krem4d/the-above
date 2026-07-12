@@ -23,5 +23,10 @@
     "id": "e2e_dialogue_runner",
     "scene": "res://scenes/ui/e2e_demo.tscn",
     "wait_frames": 20
+  },
+  {
+    "id": "waterfall",
+    "scene": "res://scenes/minigames/waterfall_demo.tscn",
+    "wait_frames": 30
   }
 ]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="2_dlg"]
 [ext_resource type="PackedScene" path="res://scenes/ui/choice_menu.tscn" id="3_chc"]
+[ext_resource type="PackedScene" path="res://scenes/minigames/waterfall_view.tscn" id="4_wf"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -24,6 +25,8 @@ mouse_filter = 2
 [node name="DialogueBox" parent="UILayer" instance=ExtResource("2_dlg")]
 
 [node name="ChoiceMenu" parent="UILayer" instance=ExtResource("3_chc")]
+
+[node name="WaterfallView" parent="UILayer" instance=ExtResource("4_wf")]
 
 [node name="DebugLayer" type="CanvasLayer" parent="."]
 layer = 100

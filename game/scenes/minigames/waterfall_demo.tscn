@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/waterfall_demo.gd" id="1_wfdemo"]
+[ext_resource type="PackedScene" path="res://scenes/rooms/act1/graybox.tscn" id="2_room"]
+[ext_resource type="PackedScene" path="res://scenes/minigames/waterfall_view.tscn" id="3_wfview"]
+
+[node name="WaterfallDemo" type="Node2D"]
+script = ExtResource("1_wfdemo")
+
+[node name="Room" parent="." instance=ExtResource("2_room")]
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="WaterfallDemoView" parent="UILayer" instance=ExtResource("3_wfview")]
+unique_name_in_owner = true
