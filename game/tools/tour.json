@@ -3,5 +3,20 @@
     "id": "graybox",
     "scene": "res://scenes/rooms/act1/graybox.tscn",
     "wait_frames": 15
+  },
+  {
+    "id": "ui_dialogue_en",
+    "scene": "res://scenes/ui/ui_demo_dialogue_en.tscn",
+    "wait_frames": 12
+  },
+  {
+    "id": "ui_dialogue_tr",
+    "scene": "res://scenes/ui/ui_demo_dialogue_tr.tscn",
+    "wait_frames": 12
+  },
+  {
+    "id": "ui_choice",
+    "scene": "res://scenes/ui/ui_demo_choice.tscn",
+    "wait_frames": 12
   }
 ]

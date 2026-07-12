@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/ui_demo.gd" id="1_demo"]
+[ext_resource type="PackedScene" path="res://scenes/rooms/act1/graybox.tscn" id="2_room"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="3_dlg"]
+[ext_resource type="PackedScene" path="res://scenes/ui/choice_menu.tscn" id="4_chc"]
+
+[node name="UIDemo" type="Node2D"]
+script = ExtResource("1_demo")
+variant = "choice"
+
+[node name="Room" parent="." instance=ExtResource("2_room")]
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="DemoDialogueBox" parent="UILayer" instance=ExtResource("3_dlg")]
+unique_name_in_owner = true
+
+[node name="DemoChoiceMenu" parent="UILayer" instance=ExtResource("4_chc")]
+unique_name_in_owner = true
