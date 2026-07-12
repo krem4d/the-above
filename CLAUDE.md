@@ -16,24 +16,17 @@ Read that file for anything not covered below.
 earlier Fable5-for-UI/Sonnet5-for-code split was tried and has been dropped. No warning or pause
 before UI work is needed anymore.
 
-## Current status (as of 2026-07-12)
+## Current status (as of 2026-07-13)
 
 Milestones complete: **M0** (toolchain/skeleton), **M1** (pipeline risk burn-down), **M-STORY** (full
 3-act story bible + all Act 1 `.scene` scripts, EN+TR), **M2** (core narrative systems + UI slice),
 **M3** (spectrogram/Waterfall mechanic v1 — the `spectro` DSL command now runs a real minigame).
 
-Next up: **M4** (day-loop scaffolding: mission-gated room transitions, allowed_exits, HUD objectives).
+Next up: **M4** (Act 1 world & Day 1 playable: real art, room scenes, day-loop scaffolding).
 
-M3 is committed on branch **`feat/m3-waterfall`** (all GdUnit4 tests green), **not yet merged to
-`master`**. `master`'s log ends at the CLAUDE.md onboarding commit:
-```
-48ef7f2 docs: add project CLAUDE.md for session onboarding
-939f122 feat: M2 core narrative systems
-f4671d6 feat: dialogue UI widgets + Turkish-safe pixel font (M2 UI slice)
-9870995 feat: full story bible + Act 1 scripts, EN+TR complete
-e30f697 feat: M1 pipeline risk burn-down
-5865e90 chore: bootstrap THE ABOVE — Godot 4.5.2 skeleton, artgen pipeline core, GdUnit4 harness
-```
+Milestone-by-milestone detail and the commit log live in **`PROGRESS.md`** (living tracker; update it
+when a checkbox flips). The forward build list with exit gates is **`PLAN.md`**. Don't duplicate
+either here — this file is architecture and gotchas only.
 
 ## Engine & pinned version
 
@@ -162,8 +155,12 @@ GdUnit4 test asserts every referenced id exists and that each session can actual
 when tuned (guards the "whole mechanic silently dead" regression class). `kind` selects the win
 condition: `tutorial` (tune+hold), `beam_scan` (visit all 3 beams — `signal_beam` is a live gate
 *only here*, the "beam 2 only" fault), `onoff` (see both states), and `broadcast`/`taxonomy`/
-`answer_gate`/`keystone` (timed; distinct only as narrative tags). `cell_seconds > 0` gives the
-canon 11-minute broadcast a visible, countable on/off cadence.
+`answer_gate`/`keystone` (timed; distinct only as narrative tags). Fake physics throughout:
+`drift_mhz_s` moves the target (the "align the drift" verb — the guide line re-syncs every tick);
+`cell_seconds > 0` gives the canon 11-minute broadcast a visible, countable on/off cadence; the
+noise background is deterministic seeded speckle (`WaterfallCanvas.hash01`, seeded from the session
+id). Timed `events` open payload windows: `shape_burst` = broadband magenta smear; `decode_text` =
+readout line resolving a locale key or (reserved, unauthored — canon lock IX) the observer name.
 
 `_do_spectro` (DialogueRunner) enters `MINIGAME` mode, runs the session, restores the prior mode, and
 writes `spectro_<id>_done` (bool) into GameState so later `.scene` content can branch on it. **Design

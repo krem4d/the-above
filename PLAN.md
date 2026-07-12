@@ -13,27 +13,32 @@ and ship (M6). Every milestone exits on `make test` + `make pytest` green and a 
 
 ---
 
-## M3 — Spectrogram (Waterfall) mechanic v1  ⬅ NEXT
+## M3 — Spectrogram (Waterfall) mechanic v1  ✅ (details in PROGRESS.md)
 
 The signature interactive centrepiece — a radio-spectrogram waterfall the player tunes to isolate a
 voice from noise. It replaces Undertale's combat and is the horror-delivery mechanism. Ship it as a
 self-contained minigame driven by the existing `spectro` DSL command before any content leans on it.
 
 **Build:**
-- [ ] `SignalField` model — deterministic, **fake the physics** (no FFT). Authored curves (center
-      freq, bandwidth, drift, timed events) drawn into seeded noise.
-- [ ] Signal data format `game/story/signals/*.json` — one file per signal; first: `sig_first_anomaly`.
-- [ ] `SpectroOverlay` scene (`game/scenes/minigames/spectro/`) — scrolling `ImageTexture` waterfall,
-      tuning input (drag frequency / align drift), sustained-proximity alignment score → reveal flags.
-- [ ] Signal "events" carry horror payloads (waterfall draws a shape; a burst decodes to the player's
-      typed name pulled from `meta.json`). `DO NOT ANSWER` is always an available button.
-- [ ] Audio paths: `AudioStreamGenerator` on desktop; pre-baked crossfaded OGG loops on web
-      (generator audio is latency-fragile in browsers).
-- [ ] Wire `spectro <signal_id>` in `DialogueRunner` — blocks the coroutine, sets result flags, returns.
-- [ ] Tests: spectro-model determinism (GdUnit4); signal-JSON schema validation.
+- [x] `SignalField` model — deterministic, **fake the physics** (no FFT). Authored curves (center
+      freq, bandwidth, drift, timed events) drawn into seeded noise. *(Shipped as `WaterfallSession`.)*
+- [x] Signal data format — single manifest `game/story/signals/spectro_sessions.json` covering all 7
+      authored `spectro` ids *(deviation from one-file-per-signal; `sig_first_anomaly` never existed
+      in the authored scenes — see PROGRESS.md M3)*.
+- [x] `SpectroOverlay` scene — shipped as `WaterfallView`/`WaterfallCanvas`
+      (`game/scenes/minigames/`): scrolling waterfall over seeded noise, tuning input (align drift),
+      sustained-proximity hold → reveal flags.
+- [~] Signal "events" carry horror payloads — `shape_burst` shipped (authored on `sig_long_call`);
+      the typed-name decode is implemented (`decode_text`) but **unauthored: conflicts with
+      secret-bible canon lock IX** (where the observer name may appear). Story-owner decision needed.
+- [~] Audio paths: `AudioStreamGenerator` on desktop; pre-baked crossfaded OGG loops on web —
+      **deferred to the M6 audio pass** (AudioManager is still the wired-later stub; audiogen/ is M6).
+- [x] Wire `spectro <signal_id>` in `DialogueRunner` — blocks the coroutine, sets result flags, returns.
+- [x] Tests: spectro-model determinism (GdUnit4); signal-JSON schema validation.
 
 **Exit gate:** one full discovery scene runs end-to-end via the `spectro` DSL command (tune → isolate
-→ reveal → set flag), on both desktop and web, captured in the tour.
+→ reveal → set flag) ✅ desktop (headless-verified); ⏳ web build + tour PNG await a machine with a
+display/export templates.
 
 ---
 

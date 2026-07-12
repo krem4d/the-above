@@ -31,18 +31,21 @@ const FREQ_STEP_MHZ := 0.1
 
 var _session: WaterfallSession = null
 var _config: Dictionary = {}
+var _decode_showing := false
 
 
 func _ready() -> void:
 	visible = false
 	set_process(false)
-	_exit_hint_label.text = Locale.t("spectro.hint.exit")
 
 
 func start_session(session_id: String, config: Dictionary) -> void:
 	_config = config
+	_decode_showing = false
 	_session = WaterfallSession.new(session_id, config)
-	_canvas.reset()
+	# Noise seed derives from the session id: deterministic per session
+	# (PLAN M3 determinism requirement), different between sessions.
+	_canvas.reset(session_id.hash())
 	_canvas.set_target_ratio(_session.target_ratio())
 	_prompt_label.text = Locale.t(String(config.get("prompt_key", "")))
 	_context_label.visible = _session.kind in ["beam_scan", "onoff"]
@@ -50,6 +53,12 @@ func start_session(session_id: String, config: Dictionary) -> void:
 	_answer_hint_label.visible = _session.answer_available
 	if _session.answer_available:
 		_answer_hint_label.text = Locale.t("spectro.hint.answer", {"verb": Locale.t("spectro.verb.answer")})
+	# When ANSWER is on the table, the safe exit is labeled for what it is —
+	# PLAN M3: "DO NOT ANSWER is always an available button". Same key
+	# (cancel), same behavior; only the label sharpens.
+	_exit_hint_label.text = Locale.t(
+		"spectro.hint.dont_answer" if _session.answer_available else "spectro.hint.exit"
+	)
 	_update_labels()
 	visible = true
 	set_process(true)
@@ -66,8 +75,43 @@ func _process(delta: float) -> void:
 	if _session == null:
 		return
 	_session.tick(delta)
-	_canvas.push_column(_session.signal_present(), _session.freq_ratio())
+	# Re-sync the target guide every tick — with drift_mhz_s the target
+	# moves, and the guide line is how the player sees what to chase.
+	_canvas.set_target_ratio(_session.target_ratio())
+	var event := _session.active_event()
+	var is_burst: bool = String(event.get("kind", "")) == "shape_burst"
+	_canvas.push_column(_session.signal_present(), _session.freq_ratio(), is_burst)
 	_update_labels()
+	_update_event_readout(event)
+
+
+## Renders a decode_text event's payload on the taxonomy/readout label —
+## and clears it again the moment the window closes, so duration_seconds
+## bounds the flash's end as well as its start (a horror beat that lingers
+## forever isn't a flash, it's a caption). Payload text is resolved HERE,
+## not in the pure session: text_key -> a locale string; text_source
+## "observer_name" -> the player's typed name (a reserved capability —
+## canon lock IX limits where the observer name may appear, so no authored
+## Act 1 session uses it; see PROGRESS.md).
+func _update_event_readout(event: Dictionary) -> void:
+	if String(event.get("kind", "")) != "decode_text":
+		if _decode_showing:
+			_decode_showing = false
+			_taxonomy_label.text = ""
+			# Taxonomy sessions keep the label (its text is re-derived every
+			# tick by _update_labels); everything else hides it again.
+			_taxonomy_label.visible = _session.kind == "taxonomy"
+		return
+	_decode_showing = true
+	_taxonomy_label.visible = true
+	if String(event.get("text_source", "")) == "observer_name":
+		_taxonomy_label.text = Locale.t(
+			"spectro.decode.line", {"text": GameState.observer_name}
+		)
+	elif event.has("text_key"):
+		_taxonomy_label.text = Locale.t(
+			"spectro.decode.line", {"text": Locale.t(String(event["text_key"]))}
+		)
 
 
 func _unhandled_input(event: InputEvent) -> void:

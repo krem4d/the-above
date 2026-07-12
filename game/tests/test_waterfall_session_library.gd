@@ -93,3 +93,46 @@ func test_every_real_session_can_render_its_trace_when_perfectly_tuned() -> void
 		assert_bool(session.signal_present()).override_failure_message(
 			"session '%s' can never render its trace even when perfectly tuned" % id
 		).is_true()
+
+
+func test_real_manifest_events_are_schema_valid() -> void:
+	# Every authored event must carry a positive window and a kind the view
+	# knows how to render; decode_text must have a payload source. A typo'd
+	# kind would silently render nothing, per the no-crash convention.
+	const KNOWN_KINDS := ["shape_burst", "decode_text"]
+	var text := FileAccess.get_file_as_string(REAL_MANIFEST_PATH)
+	var sessions: Dictionary = WaterfallSessionLibrary.parse(text)["sessions"]
+	for id: String in REQUIRED_SESSION_IDS:
+		var config: Dictionary = WaterfallSessionLibrary.get_session_config(sessions, id)
+		for event: Dictionary in config.get("events", []):
+			var kind := String(event.get("kind", ""))
+			assert_bool(kind in KNOWN_KINDS).override_failure_message(
+				"session '%s' has event with unknown kind '%s'" % [id, kind]
+			).is_true()
+			assert_bool(float(event.get("duration_seconds", 0.0)) > 0.0).override_failure_message(
+				"session '%s' has a zero-duration event window" % id
+			).is_true()
+			assert_bool(float(event.get("at_seconds", -1.0)) >= 0.0).override_failure_message(
+				"session '%s' has an event before t=0" % id
+			).is_true()
+			if kind == "decode_text":
+				assert_bool(event.has("text_key") or event.has("text_source")).override_failure_message(
+					"session '%s' decode_text event lacks a payload source" % id
+				).is_true()
+
+
+func test_no_session_mixes_events_with_cell_cadence() -> void:
+	# Authoring guard (review): bursts render regardless of the cell cadence,
+	# so an event window landing in an off half-cell would paint signal
+	# during the very silence the player is asked to count. No session mixes
+	# the two today; if a future beat needs both, this guard is the reminder
+	# to decide the interaction deliberately instead of shipping it silently.
+	var text := FileAccess.get_file_as_string(REAL_MANIFEST_PATH)
+	var sessions: Dictionary = WaterfallSessionLibrary.parse(text)["sessions"]
+	for id: String in REQUIRED_SESSION_IDS:
+		var config: Dictionary = WaterfallSessionLibrary.get_session_config(sessions, id)
+		var has_events: bool = not (config.get("events", []) as Array).is_empty()
+		var has_cells: bool = float(config.get("cell_seconds", 0.0)) > 0.0
+		assert_bool(has_events and has_cells).override_failure_message(
+			"session '%s' authors events on a cell-cadenced signal — decide how bursts interact with off-cells first (see this test's comment)" % id
+		).is_false()

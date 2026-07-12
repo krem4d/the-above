@@ -7,6 +7,7 @@ extends RefCounted
 ##
 ## `kind` drives which player action gates completion:
 ##   tutorial   — tune current_freq_mhz onto target_freq_mhz and hold it
+##                (with drift_mhz_s the target moves — "align the drift")
 ##   beam_scan  — visit all three beams (cycle_beam); the trace lives only in
 ##                signal_beam, so the player feels the "beam 2 only" fault
 ##   onoff      — observe both on-source and off-source states
@@ -14,6 +15,10 @@ extends RefCounted
 ##                elapsed_seconds reaches duration_seconds. These four are
 ##                distinct only as narrative tags (which Day's session this
 ##                is) — mechanically they are the same timer.
+##
+## Fake physics throughout (PLAN M3): authored numbers, no FFT. drift_mhz_s
+## moves the target; cell_seconds pulses the trace; `events` opens timed
+## payload windows (active_event()) the view renders.
 ##
 ## press_answer() is gated by the orthogonal `answer_available` flag, NOT by
 ## `kind`. It is never required for completion and is a no-op unless the
@@ -36,8 +41,10 @@ var signal_beam: int
 var hold_seconds: float
 var duration_seconds: float
 var cell_seconds: float
+var drift_mhz_s: float
 var answer_available: bool
 var segments: Array
+var events: Array
 
 var current_freq_mhz: float
 var current_beam: int
@@ -63,8 +70,10 @@ func _init(id: String, config: Dictionary) -> void:
 	hold_seconds = float(config.get("hold_seconds", 1.5))
 	duration_seconds = float(config.get("duration_seconds", 20.0))
 	cell_seconds = float(config.get("cell_seconds", 0.0))
+	drift_mhz_s = float(config.get("drift_mhz_s", 0.0))
 	answer_available = bool(config.get("answer_available", false))
 	segments = config.get("segments", [])
+	events = config.get("events", [])
 
 	current_freq_mhz = float(config.get("start_freq_mhz", target_freq_mhz))
 	current_beam = int(config.get("start_beam", 1))
@@ -95,7 +104,9 @@ func freq_ratio() -> float:
 	return clampf((current_freq_mhz - freq_min_mhz) / (freq_max_mhz - freq_min_mhz), 0.0, 1.0)
 
 
-## Same mapping for target_freq_mhz, for the view's static guide line.
+## Same mapping for target_freq_mhz, for the view's guide line. NOT static:
+## with drift_mhz_s the target moves every tick, so the view must re-read
+## this per frame (it does — see waterfall_view.gd's _process).
 func target_ratio() -> float:
 	if freq_max_mhz <= freq_min_mhz:
 		return 0.0
@@ -121,6 +132,12 @@ func toggle_on_source() -> void:
 
 func tick(delta: float) -> void:
 	elapsed_seconds += delta
+	# Fake physics (PLAN M3): the source drifts as an authored rate, not an
+	# FFT. The player's "align the drift" verb is chasing target_freq_mhz.
+	# Clamped to the tunable range so a long session can't drift the target
+	# somewhere the player literally cannot follow (no fail states).
+	if drift_mhz_s != 0.0:
+		target_freq_mhz = clampf(target_freq_mhz + drift_mhz_s * delta, freq_min_mhz, freq_max_mhz)
 	if kind == "tutorial":
 		if signal_present():
 			_hold_accum += delta
@@ -189,6 +206,21 @@ func press_answer() -> bool:
 
 func was_answered() -> bool:
 	return _answered
+
+
+## The timed signal event whose window contains the current elapsed time,
+## or {} when none is active (PLAN M3: "signal events carry horror
+## payloads"). Events are authored as {at_seconds, duration_seconds, kind,
+## ...} in the manifest; the view decides how each kind renders
+## (shape_burst -> broadband smear on the canvas; decode_text -> readout
+## line). Pure data here — the session never resolves payload text itself.
+func active_event() -> Dictionary:
+	for event: Dictionary in events:
+		var start := float(event.get("at_seconds", 0.0))
+		var length := float(event.get("duration_seconds", 0.0))
+		if elapsed_seconds >= start and elapsed_seconds < start + length:
+			return event
+	return {}
 
 
 ## Locale key of the taxonomy tag active at the current elapsed time, or ""

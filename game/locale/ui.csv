@@ -37,6 +37,8 @@
 "spectro.hint.answer","[R] {verb}","[R] {verb}"
 "spectro.hint.close","[E] CLOSE","[E] KAPAT"
 "spectro.hint.exit","[X] EXIT","[X] ÇIK"
+"spectro.hint.dont_answer","[X] DO NOT ANSWER","[X] YANITLAMA"
+"spectro.decode.line","DECODED: {text}","ÇÖZÜLDÜ: {text}"
 "spectro.label.freq","FREQ {freq} MHz","FREKANS {freq} MHz"
 "spectro.label.beam","BEAM {beam}","HÜZME {beam}"
 "spectro.label.on_source","ON-SOURCE","HEDEFTE"

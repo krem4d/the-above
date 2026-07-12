@@ -133,3 +133,67 @@ func test_cycle_is_a_noop_when_kind_has_no_cycle_control() -> void:
 	var beam_before: int = view._session.current_beam
 	view._handle_cycle(1)
 	assert_int(view._session.current_beam).is_equal(beam_before)
+
+
+func test_exit_hint_reads_dont_answer_only_when_answer_is_available() -> void:
+	# PLAN M3: "DO NOT ANSWER is always an available button" — when ANSWER is
+	# on the table, the safe exit is labeled explicitly, not as generic EXIT.
+	var view := _make_view()
+	view.start_session("answer_capable_demo", _answer_gate_config())
+	assert_str(view._exit_hint_label.text).is_equal(Locale.t("spectro.hint.dont_answer"))
+	view.close_session()
+	view.start_session("cal_pulsar", _tutorial_config())
+	assert_str(view._exit_hint_label.text).is_equal(Locale.t("spectro.hint.exit"))
+
+
+func test_shape_burst_event_pushes_a_burst_column() -> void:
+	var config := _tutorial_config()
+	config["kind"] = "keystone"
+	config["duration_seconds"] = 30.0
+	config["events"] = [{"at_seconds": 0.0, "duration_seconds": 5.0, "kind": "shape_burst"}]
+	var view := _make_view()
+	view.start_session("burst_demo", config)
+	view._process(0.016)
+	assert_bool(view._canvas._burst_rows.back() >= 0.0).is_true()
+
+
+func test_decode_readout_clears_when_its_window_closes() -> void:
+	# Regression (review): the decoded line used to stay on screen forever
+	# after its window closed — a permanent caption instead of a flash. The
+	# window's close must clear the label on non-taxonomy sessions.
+	var view := _make_view()
+	view.start_session("cal_pulsar", _tutorial_config())
+	view._update_event_readout(
+		{"kind": "decode_text", "text_key": "spectro.taxonomy.dawn_song"}
+	)
+	assert_bool(view._taxonomy_label.visible).is_true()
+	view._update_event_readout({})   # window closed — active_event() returns {}
+	assert_str(view._taxonomy_label.text).is_equal("")
+	assert_bool(view._taxonomy_label.visible).is_false()   # non-taxonomy kind hides it again
+
+
+func test_decode_text_event_resolves_observer_name_from_gamestate() -> void:
+	# Reserved capability check (canon lock IX limits where the typed name
+	# may appear — no authored Act 1 session uses this; the capability must
+	# still work for the future beat that will).
+	GameState.observer_name = "DENIZ"
+	var view := _make_view()
+	view.start_session("cal_pulsar", _tutorial_config())
+	view._update_event_readout(
+		{"kind": "decode_text", "text_source": "observer_name"}
+	)
+	assert_str(view._taxonomy_label.text).is_equal(
+		Locale.t("spectro.decode.line", {"text": "DENIZ"})
+	)
+	GameState.reset_new_game()
+
+
+func test_decode_text_event_resolves_locale_text_key() -> void:
+	var view := _make_view()
+	view.start_session("cal_pulsar", _tutorial_config())
+	view._update_event_readout(
+		{"kind": "decode_text", "text_key": "spectro.taxonomy.dawn_song"}
+	)
+	assert_str(view._taxonomy_label.text).is_equal(
+		Locale.t("spectro.decode.line", {"text": Locale.t("spectro.taxonomy.dawn_song")})
+	)

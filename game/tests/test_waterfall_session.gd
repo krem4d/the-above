@@ -220,3 +220,65 @@ func test_press_verb_is_flavor_only_and_never_gates_completion() -> void:
 	session.press_verb("listen")
 	assert_str(session.last_verb()).is_equal("listen")
 	assert_bool(session.is_objective_met()).is_false()   # verb press alone never completes a timed session
+
+
+func test_drift_moves_target_and_clamps_to_range() -> void:
+	var session := WaterfallSession.new("d", {
+		"kind": "tutorial", "target_freq_mhz": 1400.0, "tolerance_mhz": 0.5,
+		"freq_min_mhz": 1390.0, "freq_max_mhz": 1410.0, "start_freq_mhz": 1400.0,
+		"drift_mhz_s": -1.0, "hold_seconds": 100.0,
+	})
+	session.tick(2.0)
+	assert_float(session.target_freq_mhz).is_equal_approx(1398.0, 0.001)
+	session.tick(100.0)   # would overshoot the floor without the clamp
+	assert_float(session.target_freq_mhz).is_equal_approx(1390.0, 0.001)
+
+
+func test_drifting_target_escapes_a_stationary_lock() -> void:
+	# The "align the drift" verb: holding still is not enough; the player
+	# must chase. Target moves 1.0 MHz/s; tolerance 0.5 → a stationary
+	# cursor loses the lock within a second, resetting the hold accumulator.
+	var session := WaterfallSession.new("d", {
+		"kind": "tutorial", "target_freq_mhz": 1400.0, "tolerance_mhz": 0.5,
+		"freq_min_mhz": 1390.0, "freq_max_mhz": 1410.0, "start_freq_mhz": 1400.0,
+		"drift_mhz_s": -1.0, "hold_seconds": 1.5,
+	})
+	assert_bool(session.signal_present()).is_true()
+	session.tick(1.0)   # target now 1399.0, cursor still 1400.0 → out of tolerance
+	assert_bool(session.signal_present()).is_false()
+	session.set_frequency(1399.0)   # chase it
+	assert_bool(session.signal_present()).is_true()
+
+
+func test_drift_updates_target_ratio_for_the_guide_line() -> void:
+	var session := WaterfallSession.new("d", {
+		"target_freq_mhz": 1400.0, "freq_min_mhz": 1390.0, "freq_max_mhz": 1410.0,
+		"start_freq_mhz": 1400.0, "drift_mhz_s": -1.0, "kind": "broadcast",
+		"duration_seconds": 100.0,
+	})
+	assert_float(session.target_ratio()).is_equal_approx(0.5, 0.001)
+	session.tick(5.0)
+	assert_float(session.target_ratio()).is_equal_approx(0.25, 0.001)   # 1395 across 1390..1410
+
+
+func test_active_event_windows_open_and_close() -> void:
+	var session := WaterfallSession.new("e", {
+		"kind": "keystone", "duration_seconds": 40.0,
+		"events": [
+			{"at_seconds": 8.0, "duration_seconds": 3.0, "kind": "shape_burst"},
+			{"at_seconds": 22.0, "duration_seconds": 4.0, "kind": "decode_text", "text_key": "x"},
+		],
+	})
+	assert_bool(session.active_event().is_empty()).is_true()    # t=0, before any window
+	session.tick(9.0)
+	assert_str(session.active_event().get("kind", "")).is_equal("shape_burst")
+	session.tick(3.0)                                            # t=12, first window closed
+	assert_bool(session.active_event().is_empty()).is_true()
+	session.tick(11.0)                                           # t=23, inside the second window
+	assert_str(session.active_event().get("kind", "")).is_equal("decode_text")
+
+
+func test_no_events_config_means_no_active_event() -> void:
+	var session := WaterfallSession.new("e", {"kind": "broadcast", "duration_seconds": 10.0})
+	session.tick(5.0)
+	assert_bool(session.active_event().is_empty()).is_true()
