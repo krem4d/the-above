@@ -1,0 +1,19 @@
+# Godot
+game/.godot/
+game/android/
+*.translation
+
+# Artifacts (tour screenshots, exports)
+artifacts/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# OS/editor noise
+.DS_Store
+*~

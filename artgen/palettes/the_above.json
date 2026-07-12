@@ -1,0 +1,17 @@
+{
+  "name": "the_above_master",
+  "comment": "28-color master palette. Ramps are ordered dark->light and hue-shifted (shadows toward blue-violet, highlights toward warm). 'forbidden' colors may ONLY be used by generators that declare allow_forbidden — the signal-magenta grammar (plan section 2).",
+  "ramps": {
+    "void":  ["#0b0b12", "#14141f", "#1e1e30", "#2b2b45"],
+    "stone": ["#2e2a3e", "#4a4460", "#6b6484", "#8f88a6"],
+    "earth": ["#3f2d24", "#5f4432", "#8a6547", "#b98d62"],
+    "amber": ["#e3a55b", "#f2c37d", "#f9dfa6", "#fdf2d0"],
+    "rose":  ["#8c4a52", "#b46a6e", "#d89290"],
+    "ship":  ["#1e3236", "#2f4d51", "#48696b", "#6d8f8c"],
+    "crt":   ["#3ee68a", "#aaffcf"],
+    "paper": ["#786f5c", "#b0a890", "#dcd4c2"]
+  },
+  "forbidden": {
+    "signal": ["#ff2fd6"]
+  }
+}

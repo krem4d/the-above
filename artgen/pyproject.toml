@@ -1,0 +1,12 @@
+[project]
+name = "artgen"
+version = "0.1.0"
+description = "Deterministic pixel-art pipeline for THE ABOVE (palette-locked Pillow generators)"
+requires-python = ">=3.12"
+dependencies = ["Pillow>=10"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
