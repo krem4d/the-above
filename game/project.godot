@@ -14,6 +14,10 @@ config/features=PackedStringArray("4.5", "GL Compatibility")
 
 general/text_to_speech=false
 
+[autoload]
+
+Debug="*res://scripts/autoload/debug.gd"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")

@@ -1,0 +1,9 @@
+{
+  "generator": "tiles.graybox",
+  "comment": "M1 gray-box tileset: floor, wall, floor_var, marker. 16x16 art px baked 2x -> 32x32 cells. stone + void ramps only.",
+  "seed": 20260712,
+  "art_cell": 16,
+  "scale": 2,
+  "tiles": ["floor", "wall", "floor_var", "marker"],
+  "out": "tiles/graybox_sheet.png"
+}

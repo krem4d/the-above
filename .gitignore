@@ -6,6 +6,9 @@ game/android/
 # Artifacts (tour screenshots, exports)
 artifacts/
 
+# GdUnit4 test reports
+game/reports/
+
 # Python
 __pycache__/
 *.pyc

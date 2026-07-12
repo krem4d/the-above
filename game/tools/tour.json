@@ -1,0 +1,7 @@
+[
+  {
+    "id": "graybox",
+    "scene": "res://scenes/rooms/act1/graybox.tscn",
+    "wait_frames": 15
+  }
+]

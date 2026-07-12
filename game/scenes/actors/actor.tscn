@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/actors/actor.gd" id="1_actor"]
+[ext_resource type="SpriteFrames" path="res://assets/gen/sprites/hoca_frames.tres" id="2_frames"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_feet"]
+size = Vector2(18, 10)
+
+[node name="Actor" type="CharacterBody2D"]
+script = ExtResource("1_actor")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -20)
+sprite_frames = ExtResource("2_frames")
+animation = &"idle_s"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_feet")

@@ -24,6 +24,7 @@ tour-scene:
 	$(GODOT) --path game -- --screenshot-scene $(SCENE) --out=../artifacts/shots
 
 resources:
+	$(GODOT) --path game --headless --import
 	$(GODOT) --path game --headless --script res://tools/gen_resources.gd
 
 export-web:
