@@ -8,6 +8,12 @@ signal arrived
 
 const ARRIVE_EPSILON := 1.0
 
+## DSL actor id (e.g. "hoca", "ada") this instance registers under with
+## SceneDirector — move/face/teleport/say address actors by this name.
+@export var actor_id: String = ""
+@export var display_name: String = ""   ## falls back to the raw actor_id if empty
+@export var portrait: Texture2D = null
+
 @export var move_speed: float = 70.0
 
 var facing: String = "s":
@@ -26,6 +32,13 @@ var _walking := false
 
 func _ready() -> void:
 	play_idle()
+	if actor_id != "":
+		SceneDirector.register_actor(actor_id, self)
+
+
+func _exit_tree() -> void:
+	if actor_id != "":
+		SceneDirector.unregister_actor(actor_id)
 
 
 ## Coroutine: walk in a straight line to `target` (global), then emit `arrived`.

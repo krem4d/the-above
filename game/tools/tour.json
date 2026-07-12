@@ -18,5 +18,10 @@
     "id": "ui_choice",
     "scene": "res://scenes/ui/ui_demo_choice.tscn",
     "wait_frames": 12
+  },
+  {
+    "id": "e2e_dialogue_runner",
+    "scene": "res://scenes/ui/e2e_demo.tscn",
+    "wait_frames": 20
   }
 ]

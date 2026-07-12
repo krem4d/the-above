@@ -16,6 +16,13 @@ general/text_to_speech=false
 
 [autoload]
 
+Locale="*res://scripts/autoload/locale.gd"
+GameState="*res://scripts/autoload/game_state.gd"
+MetaPersistence="*res://scripts/autoload/meta_persistence.gd"
+SaveSystem="*res://scripts/autoload/save_system.gd"
+AudioManager="*res://scripts/autoload/audio_manager.gd"
+SceneDirector="*res://scripts/autoload/scene_director.gd"
+DialogueRunner="*res://scripts/autoload/dialogue_runner.gd"
 Debug="*res://scripts/autoload/debug.gd"
 
 [editor_plugins]
@@ -86,6 +93,7 @@ menu={
 [internationalization]
 
 locale/fallback="en"
+locale/translations=PackedStringArray("res://locale/act1_dialogue.en.translation", "res://locale/act1_dialogue.tr.translation", "res://locale/ui.en.translation", "res://locale/ui.tr.translation")
 
 [rendering]
 

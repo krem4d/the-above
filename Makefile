@@ -12,7 +12,9 @@ run:
 	$(GODOT) --path game
 
 test:
-	$(GODOT) --path game --headless -s -d addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a res://tests
+	mkdir -p $(CURDIR)/artifacts/test_userdir
+	$(GODOT) --path game --headless --user-data-dir=$(CURDIR)/artifacts/test_userdir \
+		-s -d addons/gdUnit4/bin/GdUnitCmdTool.gd --ignoreHeadlessMode -a res://tests
 
 pytest:
 	cd artgen && $(PY) -m pytest tests -q
