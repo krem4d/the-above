@@ -1,0 +1,73 @@
+# DAY 7 — THE BLIND TEST (clip anchor 5), the triad completes, THE ASKING, weeks-pass montage
+# (wrong note #9: the dogs)
+[scene d7_observatory]
+mode cutscene
+goto_room obs
+teleport hoca console
+music obs_hum fade=2.0
+fade in 1.0
+say ada d7.obs.ada.001
+say sys d7.obs.sys.001             # sealed randomized schedule; Metin holds the envelope, unknowing
+say sys d7.obs.sys.002
+say sys d7.obs.sys.003
+say sys d7.obs.sys.004
+say ebru d7.obs.ebru.001
+say ada d7.obs.ada.002
+say sys d7.obs.sys.005             # Deniz operating Millbrook remotely: noise
+say sys d7.obs.sys.006             # Ebru at Kulak's console: language
+say ebru d7.obs.ebru.002
+sfx cassette_click
+say ada d7.obs.ada.003
+say ada d7.obs.ada.004             # the thesis line (trailer quote)
+pan dish_view 3.0
+say hoca d7.obs.hoca.001           # "It knows which dish is yours."
+pan hoca 1.0
+fade out 1.5
+fade in 1.0                        # the mission case: one room, one whiteboard (it is a character now)
+say ada d7.obs.ada.005
+say sys d7.obs.sys.007
+say ada d7.obs.ada.006
+say tezcan d7.obs.tezcan.001       # haste chosen with eyes open, by named officials, on-screen
+say hoca d7.obs.hoca.002
+wait 2.0
+say ada d7.obs.ada.007             # "The instrument is the man, Deniz."
+if answered_signal
+  say hoca d7.obs.hoca.003
+else
+  say hoca d7.obs.hoca.004
+end
+choice
+  option d7.obs.choice.001 -> say_yes
+  option d7.obs.choice.002 -> say_nothing
+label say_yes
+setflag said_yes true              # long-range: last-conversation lattice, Act 2/3
+say hoca d7.obs.hoca.005
+jump asked
+label say_nothing
+setflag said_nothing true          # silence is taken as consent by the room, the state, the world
+wait 4.0
+say ada d7.obs.ada.008
+label asked
+fade out 2.0
+fade in 1.5                        # WEEKS PASS — training news under town scenes
+sfx ticker_crawl
+say ticker d7.obs.ticker.001
+say ticker d7.obs.ticker.002
+say ticker d7.obs.ticker.003       # second probe lost: "blank, not broken"
+fade out 1.5
+goto_room town
+teleport hoca town_south
+fade in 1.0
+say veli d7.town.veli.001
+choice
+  option d7.town.choice.001 -> watch_dogs
+  option d7.town.choice.002 -> look_away
+label watch_dogs
+setflag anomaly_dogs true          # wrong note #9 (demo collectible 9/9)
+wait 3.0
+say hoca d7.town.hoca.001
+label look_away
+setflag d7_obs_done true
+mission m_d7_sendoff
+fade out 2.0
+end_scene

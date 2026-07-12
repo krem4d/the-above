@@ -1,0 +1,14 @@
+# DAY 3 — wake; Yildiz refuses the kitchen while the radio is on (carrier detector, pays off Day 5)
+[scene d3_wake]
+mode cutscene
+goto_room home
+teleport hoca bed
+music taslica_morning fade=2.0
+fade in 1.5
+say hoca d3.home.hoca.001
+move yildiz hallway
+say yildiz d3.home.yildiz.001
+say hoca d3.home.hoca.002 mood=wry
+say hoca d3.home.hoca.003
+mode free_roam
+end_scene

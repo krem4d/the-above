@@ -1,0 +1,14 @@
+# DAY 2 — wake, deviation one: the radio repeats yesterday
+[scene d2_wake]
+mode cutscene
+goto_room home
+teleport hoca bed
+music taslica_morning fade=2.0
+fade in 1.5
+say radio d2.home.radio.001        # same road story as Day 1, verbatim (deniable)
+say radio d2.home.radio.002
+say hoca d2.home.hoca.001 mood=tired
+say yildiz d2.home.yildiz.001
+say hoca d2.home.hoca.002
+mode free_roam
+end_scene

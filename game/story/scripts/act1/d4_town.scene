@@ -1,0 +1,36 @@
+# DAY 4 — the wait: the warmest scene in the act, wired to a timer everyone feels
+# (wrong note #4: the streetlamp flickers in 11-beat groups)
+[scene d4_town]
+mode cutscene
+goto_room town
+teleport hoca town_south
+music taslica_warm fade=1.5
+fade in 1.0
+say sys d4.town.sys.001
+move hoca teahouse_door
+say kadir d4.town.kadir.001
+move hoca backgammon_table
+say sukru d4.town.sukru.001
+sfx dice_roll
+say sukru d4.town.sukru.002
+say hoca d4.town.hoca.001 mood=wry
+move elif hoca_front
+say elif d4.town.elif.001
+if elif_answer_wonder
+  say elif d4.town.elif.002        # she quotes his Day 1 answer back, verbatim, from the notebook
+else
+  say elif d4.town.elif.003
+end
+say hoca d4.town.hoca.002
+say elif d4.town.elif.004
+choice
+  option d4.town.choice.001 -> count_lamp
+  option d4.town.choice.002 -> let_flicker
+label count_lamp
+setflag anomaly_streetlamp true    # wrong note #4 (demo collectible 4/9)
+say hoca d4.town.hoca.003
+label let_flicker
+say kadir d4.town.kadir.002
+mode free_roam
+mission m_d4_town
+end_scene

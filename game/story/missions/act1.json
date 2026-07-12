@@ -1,0 +1,21 @@
+{
+  "act": 1,
+  "notes": "Mission objective strings live in game/locale/ui.csv (per plan: act1_dialogue.csv holds only keys referenced by .scene files). Blocked exits run a diegetic refusal line from ui.csv.",
+  "missions": [
+    { "id": "m_d1_morning", "objective_key": "mission.m_d1_morning.objective", "allowed_exits": ["home_door"], "complete_on_flag": "d1_left_home", "on_complete_script": "d1_town" },
+    { "id": "m_d1_town",    "objective_key": "mission.m_d1_town.objective",    "allowed_exits": ["dolmus_stop"], "complete_on_flag": "d1_boarded_dolmus", "on_complete_script": "d1_observatory" },
+    { "id": "m_d2_morning", "objective_key": "mission.m_d2_morning.objective", "allowed_exits": ["home_door"], "complete_on_flag": "d2_left_home", "on_complete_script": "d2_town" },
+    { "id": "m_d2_town",    "objective_key": "mission.m_d2_town.objective",    "allowed_exits": ["dolmus_stop"], "complete_on_flag": "d2_boarded_dolmus", "on_complete_script": "d2_observatory" },
+    { "id": "m_d3_morning", "objective_key": "mission.m_d3_morning.objective", "allowed_exits": ["home_door"], "complete_on_flag": "d3_left_home", "on_complete_script": "d3_town" },
+    { "id": "m_d3_town",    "objective_key": "mission.m_d3_town.objective",    "allowed_exits": ["dolmus_stop"], "complete_on_flag": "d3_boarded_dolmus", "on_complete_script": "d3_observatory" },
+    { "id": "m_d4_morning", "objective_key": "mission.m_d4_morning.objective", "allowed_exits": ["home_door"], "complete_on_flag": "d4_left_home", "on_complete_script": "d4_town" },
+    { "id": "m_d4_town",    "objective_key": "mission.m_d4_town.objective",    "allowed_exits": ["dolmus_stop"], "complete_on_flag": "d4_boarded_dolmus", "on_complete_script": "d4_observatory" },
+    { "id": "m_d5_morning", "objective_key": "mission.m_d5_morning.objective", "allowed_exits": ["home_door"], "complete_on_flag": "d5_left_home", "on_complete_script": "d5_town" },
+    { "id": "m_d5_town",    "objective_key": "mission.m_d5_town.objective",    "allowed_exits": ["dolmus_stop"], "complete_on_flag": "d5_boarded_dolmus", "on_complete_script": "d5_observatory" },
+    { "id": "m_d6_morning", "objective_key": "mission.m_d6_morning.objective", "allowed_exits": ["home_door", "dolmus_stop"], "complete_on_flag": "d6_reached_obs", "on_complete_script": "d6_observatory" },
+    { "id": "m_d6_evening", "objective_key": "mission.m_d6_evening.objective", "allowed_exits": ["obs_door", "dolmus_stop"], "complete_on_flag": "d6_reached_teahouse", "on_complete_script": "d6_town" },
+    { "id": "m_d7_morning", "objective_key": "mission.m_d7_morning.objective", "allowed_exits": ["home_door", "dolmus_stop"], "complete_on_flag": "d7_reached_obs", "on_complete_script": "d7_observatory" },
+    { "id": "m_d7_sendoff", "objective_key": "mission.m_d7_sendoff.objective", "allowed_exits": ["home_door"], "complete_on_flag": "d7_sendoff_ready", "on_complete_script": "d7_sendoff" },
+    { "id": "m_d7_launch",  "objective_key": "mission.m_d7_launch.objective",  "allowed_exits": ["dolmus_stop"], "complete_on_flag": "d7_boarded_final", "on_complete_script": "d7_launch" }
+  ]
+}

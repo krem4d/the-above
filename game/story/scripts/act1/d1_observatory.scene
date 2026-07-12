@@ -1,0 +1,71 @@
+# DAY 1 — ascent, naming ritual, waterfall tutorial, THE ARCHIVED PRINTOUTS (clip anchor 1)
+[scene d1_observatory]
+mode cutscene
+goto_room dolmus
+teleport hoca dolmus_front
+say ismet d1.road.ismet.001
+say hoca d1.road.hoca.001
+pan valley_view 3.0
+say ismet d1.road.ismet.002
+pan hoca 1.0
+fade out 1.0
+goto_room obs
+teleport hoca obs_entry
+music obs_hum fade=2.0
+fade in 1.0
+say sys d1.obs.sys.001             # OBSERVER: _  (naming ritual; engine captures input, meta-persistent)
+say sys d1.obs.sys.002
+sfx metin_humming
+say metin d1.obs.metin.001
+say hoca d1.obs.hoca.001
+say ebru d1.obs.ebru.001
+say hoca d1.obs.hoca.002 mood=wry
+move hoca console
+say sys d1.obs.sys.003
+spectro cal_pulsar                 # waterfall tutorial: align a known pulsar
+say hoca d1.obs.hoca.003
+say metin d1.obs.metin.002
+move tezcan office_door
+say tezcan d1.obs.tezcan.001
+say hoca d1.obs.hoca.004
+move hoca archive_shelf
+say sys d1.obs.sys.004
+wait 1.0
+say hoca d1.obs.hoca.005
+say hoca d1.obs.hoca.006
+show printout_overlay              # no zoom — the camera does not move; his idle animation stops
+say sys d1.obs.sys.005
+say hoca d1.obs.hoca.007
+say hoca d1.obs.hoca.008
+say hoca d1.obs.hoca.009
+hide printout_overlay
+choice
+  option d1.obs.choice.001 -> re_print
+  option d1.obs.choice.002 -> compare
+  option d1.obs.choice.003 -> say_nothing
+label re_print
+setflag d1_reprinted true
+say hoca d1.obs.hoca.010
+jump pocket
+label compare
+setflag d1_compared true
+say hoca d1.obs.hoca.011
+jump pocket
+label say_nothing
+setflag d1_said_nothing true       # long-range: colors Ebru/Tezcan trust beats later
+say hoca d1.obs.hoca.012
+label pocket
+say hoca d1.obs.hoca.013
+fade out 1.5
+goto_room town
+teleport hoca home_door
+music taslica_night fade=2.0
+fade in 1.0
+pan sky 2.5
+say hoca d1.town.hoca.008
+pan hoca 1.0
+say sys d1.town.sys.001            # save; the typed observer name appears on the slot for the first time
+setflag d1_complete true
+mission m_d2_morning
+fade out 2.0
+end_scene

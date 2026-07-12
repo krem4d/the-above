@@ -1,0 +1,57 @@
+# DAY 3 — the verification gauntlet & the microwave (clip anchor 2); the night decision
+[scene d3_observatory]
+mode cutscene
+goto_room obs
+teleport hoca obs_entry
+music obs_hum fade=2.0
+fade in 1.0
+say ebru d3.obs.ebru.001
+say sys d3.obs.sys.001
+say ebru d3.obs.ebru.002
+say sys d3.obs.sys.002
+say sys d3.obs.sys.003
+spectro sig_onoff_test             # point away — gone; point back — there, mid-syllable
+say hoca d3.obs.hoca.001
+say ebru d3.obs.ebru.003
+say sys d3.obs.sys.004
+say sys d3.obs.sys.005
+say ebru d3.obs.ebru.004
+say hoca d3.obs.hoca.002
+say ebru d3.obs.ebru.005
+say hoca d3.obs.hoca.003
+move hoca break_room
+move ebru break_room
+move metin break_room
+say ebru d3.obs.ebru.006
+say hoca d3.obs.hoca.004
+sfx microwave_unplug               # Metin unplugs it with the gravity of bomb disposal; he says nothing
+say hoca d3.obs.hoca.005
+say sys d3.obs.sys.006
+wait 2.0
+say sys d3.obs.sys.007
+say sys d3.obs.sys.008
+say ebru d3.obs.ebru.007
+face hoca microwave
+say hoca d3.obs.hoca.006
+say ebru d3.obs.ebru.008
+say hoca d3.obs.hoca.007
+fade out 1.5
+fade in 1.0
+say sys d3.obs.sys.009
+say hoca d3.obs.hoca.008
+choice
+  option d3.obs.choice.001 -> send_now
+  option d3.obs.choice.002 -> sleep_on_it
+label send_now
+setflag email_slept_on false       # long-range: choices are emotional; both send
+say hoca d3.obs.hoca.009
+jump sent
+label sleep_on_it
+setflag email_slept_on true
+say hoca d3.obs.hoca.010
+say sys d3.obs.sys.010
+label sent
+setflag d3_complete true
+mission m_d4_morning
+fade out 2.0
+end_scene

@@ -1,0 +1,21 @@
+# DAY 1 — wake (tutorial-as-life)
+[scene d1_wake]
+mode cutscene
+goto_room home
+teleport hoca bed
+music taslica_morning fade=2.0
+fade in 1.5
+sfx kettle_whistle
+say radio d1.home.radio.001
+say radio d1.home.radio.002
+move yildiz kitchen_floor
+say yildiz d1.home.yildiz.001
+say hoca d1.home.hoca.001 mood=wry
+sfx cat_bowl
+pan photo_wall 1.5
+say hoca d1.home.hoca.002
+say hoca d1.home.hoca.003
+pan hoca 1.0
+mode free_roam
+mission m_d1_morning
+end_scene

@@ -1,0 +1,17 @@
+# DAY 2 — town, compressed; the first cost of the signal is attention
+[scene d2_town]
+mode cutscene
+goto_room town
+teleport hoca town_south
+music taslica_day fade=1.5
+fade in 1.0
+move hoca bakery_door
+say fadime d2.town.fadime.001
+say hoca d2.town.hoca.001
+say fadime d2.town.fadime.002
+move hoca square_center
+say sukru d2.town.sukru.001
+say hoca d2.town.hoca.002
+mode free_roam
+mission m_d2_town
+end_scene

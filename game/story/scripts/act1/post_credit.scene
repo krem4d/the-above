@@ -1,0 +1,26 @@
+# POST-CREDIT — the corridor, with one difference (clip anchor 7). Wordless.
+# Same corridor, same hum, same durations, frame for frame — except seven suit hooks:
+# five suits, two empty. Nothing acknowledges it. (Act-1 meta-beat budget: spent here.)
+[scene post_credit]
+mode cutscene
+fade out 0.0
+goto_room ship_corridor_seven
+teleport hoca offscreen
+music vent_hum fade=3.0
+fade in 2.0
+wait 8.0
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink_magenta
+wait 4.0                           # hold four extra seconds
+fade out 2.0
+title_variant version_plus_one     # the menu's version string has gained one character
+end_scene

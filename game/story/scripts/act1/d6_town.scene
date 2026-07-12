@@ -1,0 +1,52 @@
+# DAY 6 evening — the defensible half; Rio 8; the triad begins
+# (wrong notes #7 and #8: the barber's mirror; the rain on Degirmen Street)
+[scene d6_town]
+mode cutscene
+goto_room town
+teleport hoca teahouse_door
+music taslica_night fade=2.0
+fade in 1.0
+sfx ticker_crawl
+say ticker d6.town.ticker.001
+say ticker d6.town.ticker.002
+say sukru d6.town.sukru.001
+choice
+  option d6.town.choice.001 -> tell_truth
+  option d6.town.choice.002 -> deflect
+label tell_truth
+setflag told_town_truth true       # long-range: send-off tone feeder
+say hoca d6.town.hoca.001
+say sukru d6.town.sukru.002
+jump after_sukru
+label deflect
+setflag told_town_truth false
+say hoca d6.town.hoca.002
+say sukru d6.town.sukru.003
+label after_sukru
+say ticker d6.town.ticker.003      # probe silent — "blank, not broken" enters the language
+say hoca d6.town.hoca.003
+choice
+  option d6.town.choice.003 -> barber
+  option d6.town.choice.004 -> after_barber
+label barber
+setflag anomaly_mirror_date true   # wrong note #7 (demo collectible 7/9)
+move hoca barber_door
+say husnu d6.town.husnu.001
+say hoca d6.town.hoca.004
+label after_barber
+choice
+  option d6.town.choice.005 -> rain_street
+  option d6.town.choice.006 -> head_up
+label rain_street
+setflag anomaly_still_rain true    # wrong note #8 (demo collectible 8/9)
+move hoca degirmen_street
+sfx rain_soft
+say hoca d6.town.hoca.005
+say elif d6.town.elif.001
+say hoca d6.town.hoca.006
+label head_up
+say hoca d6.town.hoca.007          # he sleeps at the observatory; the composition pulls him skyward
+setflag d6_complete true
+mission m_d7_morning
+fade out 2.0
+end_scene

@@ -1,0 +1,79 @@
+# DAY 6 — THE ELEVEN MINUTES (the keystone; clip anchor 4)
+# Beat one: relief. Beat two: dread. This scene gets the game's slowest pacing.
+[scene d6_observatory]
+mode cutscene
+goto_room obs
+teleport hoca console
+music obs_hum fade=2.0
+fade in 1.5
+say sys d6.obs.sys.001
+say hoca d6.obs.hoca.001
+wait 2.0
+say sys d6.obs.sys.002             # 02:24 — eleven minutes later
+sfx waterfall_bloom
+spectro sig_long_call              # the long call: structured, dense, ADDRESSED; 11 minutes
+say hoca d6.obs.hoca.002
+sfx misclick                       # sprite-level acting: two failed clicks are animated
+sfx misclick
+say hoca d6.obs.hoca.003
+say sys d6.obs.sys.003
+sfx phone_ring
+say lena d6.obs.lena.001
+say lena d6.obs.lena.002
+say hoca d6.obs.hoca.004
+fade out 2.0
+goto_room obs_breakroom
+teleport hoca whiteboard
+fade in 2.0                        # 04:00. THE WHITEBOARD, BEAT ONE — relief.
+show whiteboard_clean
+say hoca d6.obs.hoca.005
+sfx marker_squeak
+say sys d6.obs.sys.004
+say ebru d6.obs.ebru.001
+say hoca d6.obs.hoca.006
+wait 2.0
+say hoca d6.obs.hoca.007
+say ebru d6.obs.ebru.002
+sfx lokum_tin
+say ebru d6.obs.ebru.003
+say hoca d6.obs.hoca.008
+say ebru d6.obs.ebru.004
+say hoca d6.obs.hoca.009 mood=wry
+fade out 1.5
+fade in 1.0                        # triangulation — the day between the beats, told in instruments
+say sys d6.obs.sys.005
+say sys d6.obs.sys.006
+say sys d6.obs.sys.007
+sfx ticker_crawl
+say ticker d6.obs.ticker.001
+say hoca d6.obs.hoca.010
+fade out 2.0
+show title_same_whiteboard         # title card: "THE SAME WHITEBOARD."
+wait 2.5
+hide title_same_whiteboard
+fade in 2.0                        # BEAT TWO — dread. Two circles. Three people not talking.
+say ebru d6.obs.ebru.005
+wait 2.0
+say hoca d6.obs.hoca.011
+say hoca d6.obs.hoca.012
+wait 2.0
+say hoca d6.obs.hoca.013           # "Either the physics is wrong, or it answered before it was asked."
+wait 3.0                           # no sting. no music.
+say metin d6.obs.metin.001         # Metin's only line near T1 material, ever
+move metin obs_exit
+choice
+  option d6.obs.choice.001 -> reach_eraser
+  option d6.obs.choice.002 -> dont_touch
+label reach_eraser
+setflag reached_for_eraser true    # emotional only; nothing comes off the board
+say hoca d6.obs.hoca.014
+say ebru d6.obs.ebru.006
+jump board_done
+label dont_touch
+say ebru d6.obs.ebru.007
+label board_done
+say hoca d6.obs.hoca.015
+setflag d6_obs_done true
+mission m_d6_evening
+fade out 2.0
+end_scene

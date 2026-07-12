@@ -1,0 +1,73 @@
+# DAY 5 — THE TRANSGRESSION: the rule, the breach, and the ANSWER verb ungrayed
+# (wrong notes #5 and #6 on the way home)
+[scene d5_observatory]
+mode cutscene
+goto_room obs
+teleport hoca console
+music obs_hum fade=2.0
+fade in 1.0
+say sys d5.obs.sys.001
+say sys d5.obs.sys.002
+say ada d5.obs.ada.001
+sfx ticker_crawl
+say ticker d5.obs.ticker.001
+say ada d5.obs.ada.002
+say hoca d5.obs.hoca.001
+say ada d5.obs.ada.003
+fade out 2.0
+fade in 1.5                        # night. everyone gone. the console.
+say hoca d5.obs.hoca.002
+say sys d5.obs.sys.003             # the schedule cell opens; ANSWER is no longer gray
+choice
+  option d5.obs.choice.001 -> just_listen
+  option d5.obs.choice.002 -> just_log
+  option d5.obs.choice.003 -> answer
+label just_listen
+setflag answered_signal false      # long-range: Ending C gate feeder (never voluntarily answering)
+spectro sig_cell_listen
+say hoca d5.obs.hoca.003
+jump night_done
+label just_log
+setflag answered_signal false
+say hoca d5.obs.hoca.004
+say sys d5.obs.sys.004
+jump night_done
+label answer
+setflag answered_signal true       # canonical-default; every consequence flows from this
+sfx carrier_pulse
+say sys d5.obs.sys.005
+wait 3.0
+say hoca d5.obs.hoca.005
+say hoca d5.obs.hoca.006           # transgression feels like nothing. That is the horror.
+label night_done
+fade out 1.5
+goto_room dolmus
+teleport hoca dolmus_front
+fade in 1.0
+sfx ezan_echo
+say ismet d5.road.ismet.001
+choice
+  option d5.road.choice.001 -> mark_echo
+  option d5.road.choice.002 -> ride_on
+label mark_echo
+setflag anomaly_early_echo true    # wrong note #5 (demo collectible 5/9)
+say hoca d5.road.hoca.001
+label ride_on
+fade out 1.0
+goto_room home
+teleport hoca home_entry
+music taslica_night fade=2.0
+fade in 1.0
+say hoca d5.home.hoca.003
+choice
+  option d5.home.choice.001 -> look_up
+  option d5.home.choice.002 -> go_to_bed
+label look_up
+setflag anomaly_ceiling_fade true  # wrong note #6 (demo collectible 6/9)
+say hoca d5.home.hoca.004
+say hoca d5.home.hoca.005
+label go_to_bed
+setflag d5_complete true
+mission m_d6_morning
+fade out 2.0
+end_scene

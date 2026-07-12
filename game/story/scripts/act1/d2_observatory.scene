@@ -1,0 +1,58 @@
+# DAY 2 — the single feed horn; colleagues dismiss; first live LISTEN (wrong note #2 on the road)
+[scene d2_observatory]
+mode cutscene
+goto_room dolmus
+teleport hoca dolmus_front
+say ismet d2.road.ismet.001
+say hoca d2.road.hoca.001
+move veli roadside
+say veli d2.road.veli.001
+say hoca d2.road.hoca.002
+say veli d2.road.veli.002
+fade out 1.0
+goto_room obs
+teleport hoca obs_entry
+music obs_hum fade=2.0
+fade in 1.0
+say ebru d2.obs.ebru.001
+say hoca d2.obs.hoca.001
+say ebru d2.obs.ebru.002
+say sys d2.obs.sys.001
+spectro sig_beam_check             # player pans beams 1 -> 2 -> 3; the trace exists only under beam 2
+say ebru d2.obs.ebru.003
+say hoca d2.obs.hoca.002
+say ebru d2.obs.ebru.004
+choice
+  option d2.obs.choice.001 -> check_scope
+  option d2.obs.choice.002 -> keep_working
+label check_scope
+setflag anomaly_moving_star true   # wrong note #2 (demo collectible 2/9)
+say hoca d2.obs.hoca.003
+say hoca d2.obs.hoca.004
+label keep_working
+move hoca office_door
+say tezcan d2.obs.tezcan.001
+say tezcan d2.obs.tezcan.002
+say tezcan d2.obs.tezcan.003
+say hoca d2.obs.hoca.005
+sfx metin_hum_stop                 # Metin stops humming near T1 material; the game never says why
+say hoca d2.obs.hoca.006
+choice
+  option d2.obs.choice.003 -> ask_metin
+  option d2.obs.choice.004 -> let_it_be
+label ask_metin
+setflag asked_metin_humming true   # long-range: Metin/Hale lattice, never resolved
+say hoca d2.obs.hoca.007
+say metin d2.obs.metin.001
+label let_it_be
+fade out 1.5
+fade in 1.0
+say sys d2.obs.sys.002
+spectro sig_first_listen           # broadcast schedule learned: 11-minute cells (never stated)
+say hoca d2.obs.hoca.008
+say sys d2.obs.sys.003             # NEW VERB: ANSWER — UNAVAILABLE. Dread by interface.
+say hoca d2.obs.hoca.009
+setflag d2_complete true
+mission m_d3_morning
+fade out 2.0
+end_scene

@@ -1,0 +1,34 @@
+# THE ABOVE — Act 1 — cold open (20 s, wordless; the first clip exists before minute one)
+[scene cold_open]
+mode cutscene
+fade out 0.0
+goto_room ship_corridor
+teleport hoca offscreen
+music vent_hum fade=3.0
+fade in 2.0
+wait 8.0
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink
+wait 1.6
+sfx lamp_blink_magenta        # sixth blink: signal-magenta for exactly one frame
+wait 0.4
+music none fade=0.0
+fade out 0.0                  # hard cut — no fade duration
+goto_room town
+teleport hoca offscreen
+music taslica_golden fade=0.0
+fade in 0.0
+sfx birdsong
+wait 2.0
+show title_card_the_above
+wait 3.0
+hide title_card_the_above
+fade out 1.5
+end_scene

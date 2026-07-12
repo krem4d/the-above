@@ -1,0 +1,13 @@
+# DAY 6 — 01:30, no point pretending; he goes up in the dark
+[scene d6_wake]
+mode cutscene
+goto_room home
+teleport hoca bed
+music none fade=0.0
+fade in 2.0
+say hoca d6.home.hoca.001 mood=tired
+move yildiz kitchen_floor
+say yildiz d6.home.yildiz.001
+say hoca d6.home.hoca.002
+mode free_roam
+end_scene

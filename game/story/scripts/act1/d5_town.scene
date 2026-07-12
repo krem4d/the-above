@@ -1,0 +1,36 @@
+# DAY 5 — the town closes politely around him; ADA ARRIVES (attachment begins on purpose)
+[scene d5_town]
+mode cutscene
+goto_room town
+teleport hoca town_south
+music taslica_pressed fade=1.5
+fade in 1.0
+say havva d5.town.havva.001
+say hoca d5.town.hoca.001
+say havva d5.town.havva.002
+move ada teahouse_back
+move hoca teahouse_back
+say ada d5.town.ada.001
+say ada d5.town.ada.002
+say hoca d5.town.hoca.002
+choice
+  option d5.town.choice.001 -> play_everything
+  option d5.town.choice.002 -> keep_one_back
+label play_everything
+setflag ada_given_everything true  # long-range: Ada last-conversation feeder (Act 2, C1-end)
+say ada d5.town.ada.003
+jump taxonomy
+label keep_one_back
+setflag ada_given_everything false
+say hoca d5.town.hoca.003
+say ada d5.town.ada.004
+label taxonomy
+spectro sig_taxonomy               # second waterfall session — now with a companion who NAMES things
+say ada d5.town.ada.005
+say ada d5.town.ada.006
+say ada d5.town.ada.007
+say hoca d5.town.hoca.004
+say ada d5.town.ada.008
+mode free_roam
+mission m_d5_town
+end_scene

@@ -1,0 +1,14 @@
+# DAY 4 — wake at 14:00; the loop shown mid-collapse
+[scene d4_wake]
+mode cutscene
+goto_room home
+teleport hoca bed
+music taslica_afternoon fade=2.0
+fade in 1.5
+say hoca d4.home.hoca.001 mood=tired
+say hoca d4.home.hoca.002
+move yildiz desk
+say yildiz d4.home.yildiz.001
+say hoca d4.home.hoca.003
+mode free_roam
+end_scene

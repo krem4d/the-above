@@ -1,0 +1,53 @@
+# DAY 1 — the town, full loop, warm register (wrong note #1: the extra chair)
+[scene d1_town]
+mode cutscene
+goto_room town
+teleport hoca town_south
+music taslica_day fade=1.5
+fade in 1.0
+move hoca bakery_door
+say fadime d1.town.fadime.001
+say hoca d1.town.hoca.001
+say fadime d1.town.fadime.002
+move hoca bakkal_door
+say musa d1.town.musa.001
+say hoca d1.town.hoca.002 mood=wry
+move hoca square_center
+say sukru d1.town.sukru.001
+say hoca d1.town.hoca.003
+move elif hoca_front
+say elif d1.town.elif.001
+say elif d1.town.elif.002
+choice
+  option d1.town.choice.001 -> answer_wonder
+  option d1.town.choice.002 -> answer_technical
+label answer_wonder
+setflag elif_answer_wonder true    # long-range: Elif's notebook (Act 3 / Ending B feeder)
+say hoca d1.town.hoca.004
+say elif d1.town.elif.003
+jump elif_done
+label answer_technical
+setflag elif_answer_wonder false
+say hoca d1.town.hoca.005
+say elif d1.town.elif.004
+label elif_done
+say elif d1.town.elif.005
+move hoca teahouse_door
+say kadir d1.town.kadir.001
+say hoca d1.town.hoca.006
+sfx tea_pour
+choice
+  option d1.town.choice.003 -> ask_chair
+  option d1.town.choice.004 -> drink_tea
+label ask_chair
+setflag anomaly_extra_chair true   # wrong note #1 (demo collectible 1/9)
+say hoca d1.town.hoca.007
+say kadir d1.town.kadir.002
+say kadir d1.town.kadir.003
+jump tea_done
+label drink_tea
+say kadir d1.town.kadir.004
+label tea_done
+mode free_roam
+mission m_d1_town
+end_scene

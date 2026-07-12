@@ -1,0 +1,45 @@
+# DAY 4 — THE CALL (clip anchor 3): "We hear it too." Then the world event, and dawn tea.
+[scene d4_observatory]
+mode cutscene
+goto_room obs
+teleport hoca console
+music obs_hum fade=2.0
+fade in 1.0
+say ebru d4.obs.ebru.001
+say hoca d4.obs.hoca.001
+sfx phone_ring
+sfx phone_ring
+move hoca landline
+say hoca d4.obs.hoca.002
+wait 2.0
+say lena d4.obs.lena.001
+wait 3.0
+say hoca d4.obs.hoca.003
+show metin_doorway
+move ebru rack_floor               # Ebru sits down on the floor
+say ebru d4.obs.ebru.002
+say lena d4.obs.lena.002
+say hoca d4.obs.hoca.004
+music none fade=1.0
+sfx ticker_crawl
+say ticker d4.obs.ticker.001
+say ebru d4.obs.ebru.003
+fade out 1.5
+goto_room town
+teleport hoca teahouse_door
+music taslica_night fade=2.0
+fade in 1.0
+say ticker d4.town.ticker.001
+say tarik d4.town.tarik.001
+say hoca d4.town.hoca.004
+sfx teahouse_murmur
+fade out 2.0
+fade in 1.5                        # dawn; the loop inverted; the town asleep
+say hoca d4.town.hoca.005
+sfx tea_pour                       # Kadir opens early for him. Asks nothing. Pours.
+say kadir d4.town.kadir.003
+say hoca d4.town.hoca.006
+setflag d4_complete true
+mission m_d5_morning
+fade out 2.0
+end_scene

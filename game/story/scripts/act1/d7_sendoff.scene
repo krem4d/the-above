@@ -1,0 +1,68 @@
+# DAY 7 — THE SEND-OFF (emotional peak; clip anchor 6). The whole loop, one final time,
+# with the town assembled inside it. Saniye last, off every camera.
+[scene d7_sendoff]
+mode cutscene
+goto_room town
+teleport hoca home_door
+music sendoff fade=3.0
+fade in 2.0
+move hoca bakery_door
+say fadime d7.sendoff.fadime.001
+move hoca bakkal_door
+say musa d7.sendoff.musa.001
+move hoca square_center
+say sukru d7.sendoff.sukru.001
+if told_town_truth
+  say sukru d7.sendoff.sukru.002
+else
+  say sukru d7.sendoff.sukru.003
+end
+move elif hoca_front
+if elif_answer_wonder
+  say elif d7.sendoff.elif.001     # his own Day 1 answer, in her handwriting
+else
+  say elif d7.sendoff.elif.002
+end
+say elif d7.sendoff.elif.003
+say cemal d7.sendoff.cemal.001
+say havva d7.sendoff.havva.001     # the blank stamped envelope (Ending B is, structurally, him using it)
+say nurten d7.sendoff.nurten.001
+move hoca barber_door
+sfx scissors                       # a precise, silent, final haircut; the chair turned away from the mirror
+say hoca d7.sendoff.hoca.001
+say osman d7.sendoff.osman.001
+say ayse d7.sendoff.ayse.001
+say ferit d7.sendoff.ferit.001
+say veli d7.sendoff.veli.001
+say tarik d7.sendoff.tarik.001
+say tarik d7.sendoff.tarik.002
+move hoca teahouse_door
+say zeliha d7.sendoff.zeliha.001   # the tin labeled with six names — count them
+say kadir d7.sendoff.kadir.001     # pours the second glass anyway; covers it with the saucer
+move yildiz saniye_door            # the handoff: zero dialogue
+wait 2.0
+move hoca saniye_door
+say saniye d7.sendoff.saniye.001
+say saniye d7.sendoff.saniye.002   # the gift the finale is built on; no camera sees it, no copy contains it
+choice
+  option d7.sendoff.choice.001 -> promise
+  option d7.sendoff.choice.002 -> stay_silent
+label promise
+setflag promised_saniye true       # long-range: finale feeder
+say hoca d7.sendoff.hoca.002
+jump farewell_done
+label stay_silent
+setflag promised_saniye false
+wait 3.0
+label farewell_done
+move hoca dolmus_stop
+say ismet d7.sendoff.ismet.001     # the shoebox of letters rides up front; Deniz in the back, first time
+say hoca d7.sendoff.hoca.003
+pan dish_view 3.0
+sfx dish_servo                     # Metin tips Kulak two degrees — a 32-meter wave
+say hoca d7.sendoff.hoca.004
+pan hoca 1.0
+setflag d7_sendoff_done true
+mission m_d7_launch
+fade out 3.0
+end_scene

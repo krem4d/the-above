@@ -1,0 +1,37 @@
+# DAY 7 — THE LAUNCH. Smash cut; the music knew. Demo endpoint.
+[scene d7_launch]
+mode cutscene
+goto_room pad
+teleport hoca capsule_seat
+music launch_low fade=1.0
+fade in 0.5
+sfx steam_vent
+say sys d7.launch.sys.001
+say sys d7.launch.sys.002
+fade out 0.0                       # intercut: the tea house TV, the whole town crammed in
+goto_room town
+teleport hoca offscreen
+fade in 0.0
+sfx ticker_crawl
+say ticker d7.launch.ticker.001
+pan wall_table 2.0                 # the extra chair, empty, in the back of frame
+wait 2.0
+fade out 0.0
+goto_room pad
+teleport hoca capsule_seat
+fade in 0.0
+sfx capsule_breathing              # five strangers' breathing, and one astronomer's
+say voss d7.launch.voss.001        # the synchronize ritual, planted
+say ada d7.launch.ada.001
+say hoca d7.launch.hoca.001
+say hoca d7.launch.hoca.002        # "Still receiving."
+sfx engine_roar
+music signal_motif fade=1.0        # planted in the mix: the player realizes the music knew
+shake 3.0
+fade out 0.0
+show title_end_act_one
+wait 4.0
+hide title_end_act_one
+title_variant post_act1
+setflag act1_complete true
+end_scene

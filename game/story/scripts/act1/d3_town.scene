@@ -1,0 +1,27 @@
+# DAY 3 — town at noon, unfamiliar hour (wrong note #3: Cemal's radio replays yesterday)
+[scene d3_town]
+mode cutscene
+goto_room town
+teleport hoca town_south
+music taslica_noon fade=1.5
+fade in 1.0
+say hoca d3.town.hoca.001
+move hoca butcher_door
+sfx radio_football
+say cemal d3.town.cemal.001
+say hoca d3.town.hoca.002
+choice
+  option d3.town.choice.001 -> listen_closer
+  option d3.town.choice.002 -> move_on
+label listen_closer
+say hoca d3.town.hoca.003
+say hoca d3.town.hoca.004
+move hoca bakkal_door
+say musa d3.town.musa.001
+say hoca d3.town.hoca.005
+setflag anomaly_radio_replay true  # wrong note #3 (demo collectible 3/9)
+label move_on
+say cemal d3.town.cemal.002
+mode free_roam
+mission m_d3_town
+end_scene

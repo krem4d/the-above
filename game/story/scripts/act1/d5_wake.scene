@@ -1,0 +1,16 @@
+# DAY 5 — wake to noise: the radio is all T1; the world has found the town
+[scene d5_wake]
+mode cutscene
+goto_room home
+teleport hoca bed
+music taslica_uneasy fade=2.0
+fade in 1.5
+say radio d5.home.radio.001
+say hoca d5.home.hoca.001
+say radio d5.home.radio.002
+pan window 2.0
+say hoca d5.home.hoca.002
+pan hoca 1.0
+say yildiz d5.home.yildiz.001
+mode free_roam
+end_scene
