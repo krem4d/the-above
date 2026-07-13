@@ -1,0 +1,266 @@
+[gd_scene load_steps=34 format=4]
+
+[ext_resource type="Script" path="res://scripts/systems/room.gd" id="1_017gc"]
+[ext_resource type="TileSet" path="res://assets/gen/tiles/dolmus_tileset.tres" id="2_w4atn"]
+[ext_resource type="Texture2D" path="res://assets/gen/props/dolmus_props.png" id="3_xf5in"]
+[ext_resource type="PackedScene" path="res://scenes/actors/actor.tscn" id="4_dosbt"]
+[ext_resource type="Script" path="res://scripts/actors/actor.gd" id="5_pqhli"]
+[ext_resource type="Texture2D" path="res://assets/gen/sprites/portraits/ismet.png" id="6_bcdrq"]
+[ext_resource type="SpriteFrames" path="res://assets/gen/sprites/ismet_frames.tres" id="7_ftnqb"]
+[ext_resource type="PackedScene" path="res://scenes/actors/player.tscn" id="8_t0h46"]
+[ext_resource type="Script" path="res://scripts/actors/player.gd" id="9_wra8e"]
+[ext_resource type="Texture2D" path="res://assets/gen/sprites/portraits/hoca.png" id="10_tlr54"]
+[ext_resource type="Texture2D" path="res://assets/gen/sprites/portraits/hoca_tired.png" id="11_1te86"]
+[ext_resource type="Texture2D" path="res://assets/gen/sprites/portraits/hoca_wry.png" id="12_4h5yp"]
+[ext_resource type="Texture2D" path="res://assets/gen/sprites/portraits/hoca_listening.png" id="13_txktt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgxru"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(0, 0, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0c1xv"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(0, 0, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lajk6"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(0, 0, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3cgpb"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(0, 32, 64, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03ey4"]
+size = Vector2(64, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7b5u"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqf35"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(64, 32, 40, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hoq2l"]
+size = Vector2(40, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nbv6"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(64, 32, 40, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6t5p"]
+size = Vector2(40, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7v4r"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(64, 32, 40, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0yrva"]
+size = Vector2(40, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l11yw"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(64, 32, 40, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ikmdh"]
+size = Vector2(40, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lp3u0"]
+atlas = ExtResource("3_xf5in")
+region = Rect2(104, 32, 24, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ao47t"]
+size = Vector2(24, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k8vtw"]
+size = Vector2(640, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ndsq6"]
+size = Vector2(640, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q041w"]
+size = Vector2(32, 384)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crgt4"]
+size = Vector2(32, 384)
+
+[node name="Dolmus" type="Node2D"]
+script = ExtResource("1_017gc")
+room_id = "dolmus"
+room_size = Vector2i(20, 12)
+
+[node name="Ground" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAHAAMAAAAAAAAAAAAIAAMAAAAAAAAAAAAJAAMAAAAAAAAAAAAKAAMAAAAAAAAAAAALAAMAAAAAAAAAAAAMAAMAAAAAAAAAAAANAAMAAAAAAAAAAAAOAAMAAAAAAAAAAAAPAAMAAAAAAAAAAAAQAAMAAAAAAAAAAAARAAMAAAAAAAAAAAASAAMAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAFAAQAAAAAAAAAAAAGAAQAAAAAAAAAAAAHAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAJAAQAAAAAAAAAAAAKAAQAAAAAAAAAAAALAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAANAAQAAAAAAAAAAAAOAAQAAAAAAAAAAAAPAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAARAAQAAAAAAAAAAAASAAQAAAAAAAAAAAABAAUAAAAAAAAAAAACAAUAAAAAAAAAAAADAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAGAAUAAAAAAAAAAAAHAAUAAAAAAAAAAAAIAAUAAAAAAAAAAAAJAAUAAAAAAAAAAAAKAAUAAAAAAAAAAAALAAUAAAAAAAAAAAAMAAUAAAAAAAAAAAANAAUAAAAAAAAAAAAOAAUAAAAAAAAAAAAPAAUAAAAAAAAAAAAQAAUAAAAAAAAAAAARAAUAAAAAAAAAAAASAAUAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAALAAYAAAAAAAAAAAAMAAYAAAAAAAAAAAANAAYAAAAAAAAAAAAOAAYAAAAAAAAAAAAPAAYAAAAAAAAAAAAQAAYAAAAAAAAAAAARAAYAAAAAAAAAAAASAAYAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAQAAcAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAAOAAgAAAAAAAAAAAAPAAgAAAAAAAAAAAAQAAgAAAAAAAAAAAARAAgAAAAAAAAAAAASAAgAAAAAAAAAAAA=")
+tile_set = ExtResource("2_w4atn")
+
+[node name="FloorDecor" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_w4atn")
+
+[node name="Walls" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAAAIAAAABAAAAAAABAAIAAAABAAAAAAACAAIAAAABAAAAAAADAAIAAAABAAAAAAAEAAIAAAABAAAAAAAFAAIAAAABAAAAAAAGAAIAAAABAAAAAAAHAAIAAAABAAAAAAAIAAIAAAABAAAAAAAJAAIAAAABAAAAAAAKAAIAAAABAAAAAAALAAIAAAABAAAAAAAMAAIAAAABAAAAAAANAAIAAAABAAAAAAAOAAIAAAABAAAAAAAPAAIAAAABAAAAAAAQAAIAAAABAAAAAAARAAIAAAABAAAAAAASAAIAAAABAAAAAAATAAIAAAABAAAAAAAAAAMAAAABAAAAAAATAAMAAAABAAAAAAAAAAQAAAABAAAAAAATAAQAAAABAAAAAAAAAAUAAAABAAAAAAATAAUAAAABAAAAAAAAAAYAAAABAAAAAAATAAYAAAABAAAAAAAAAAcAAAABAAAAAAATAAcAAAABAAAAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAACAAgAAAABAAAAAAADAAgAAAABAAAAAAAEAAgAAAABAAAAAAAFAAgAAAABAAAAAAAGAAgAAAABAAAAAAAHAAgAAAABAAAAAAAIAAgAAAABAAAAAAAJAAgAAAABAAAAAAAKAAgAAAABAAAAAAALAAgAAAABAAAAAAAMAAgAAAABAAAAAAANAAgAAAABAAAAAAAOAAgAAAABAAAAAAAPAAgAAAABAAAAAAAQAAgAAAABAAAAAAARAAgAAAABAAAAAAASAAgAAAABAAAAAAATAAgAAAABAAAAAAA=")
+tile_set = ExtResource("2_w4atn")
+
+[node name="World" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="window_valley_a" type="Node2D" parent="World"]
+position = Vector2(160, 96)
+
+[node name="Sprite" type="Sprite2D" parent="World/window_valley_a"]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_kgxru")
+
+[node name="window_valley_b" type="Node2D" parent="World"]
+position = Vector2(320, 96)
+
+[node name="Sprite" type="Sprite2D" parent="World/window_valley_b"]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_0c1xv")
+
+[node name="window_valley_c" type="Node2D" parent="World"]
+position = Vector2(480, 96)
+
+[node name="Sprite" type="Sprite2D" parent="World/window_valley_c"]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_lajk6")
+
+[node name="dashboard" type="Node2D" parent="World"]
+position = Vector2(83.2, 147.2)
+
+[node name="Sprite" type="Sprite2D" parent="World/dashboard"]
+position = Vector2(0, -18)
+texture = SubResource("AtlasTexture_3cgpb")
+
+[node name="Solid" type="StaticBody2D" parent="World/dashboard"]
+
+[node name="@CollisionShape2D@2" type="CollisionShape2D" parent="World/dashboard/Solid"]
+position = Vector2(0, -18)
+shape = SubResource("RectangleShape2D_03ey4")
+
+[node name="bus_door" type="Node2D" parent="World"]
+position = Vector2(576, 284.8)
+
+[node name="Sprite" type="Sprite2D" parent="World/bus_door"]
+position = Vector2(0, -24)
+texture = SubResource("AtlasTexture_w7b5u")
+
+[node name="seat_row_a" type="Node2D" parent="World"]
+position = Vector2(208, 262.4)
+
+[node name="Sprite" type="Sprite2D" parent="World/seat_row_a"]
+position = Vector2(0, -14)
+texture = SubResource("AtlasTexture_uqf35")
+
+[node name="Solid" type="StaticBody2D" parent="World/seat_row_a"]
+
+[node name="@CollisionShape2D@3" type="CollisionShape2D" parent="World/seat_row_a/Solid"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_hoq2l")
+
+[node name="seat_row_b" type="Node2D" parent="World"]
+position = Vector2(304, 262.4)
+
+[node name="Sprite" type="Sprite2D" parent="World/seat_row_b"]
+position = Vector2(0, -14)
+texture = SubResource("AtlasTexture_2nbv6")
+
+[node name="Solid" type="StaticBody2D" parent="World/seat_row_b"]
+
+[node name="@CollisionShape2D@4" type="CollisionShape2D" parent="World/seat_row_b/Solid"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_q6t5p")
+
+[node name="seat_row_c" type="Node2D" parent="World"]
+position = Vector2(400, 262.4)
+
+[node name="Sprite" type="Sprite2D" parent="World/seat_row_c"]
+position = Vector2(0, -14)
+texture = SubResource("AtlasTexture_q7v4r")
+
+[node name="Solid" type="StaticBody2D" parent="World/seat_row_c"]
+
+[node name="@CollisionShape2D@5" type="CollisionShape2D" parent="World/seat_row_c/Solid"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_0yrva")
+
+[node name="seat_row_d" type="Node2D" parent="World"]
+position = Vector2(496, 262.4)
+
+[node name="Sprite" type="Sprite2D" parent="World/seat_row_d"]
+position = Vector2(0, -14)
+texture = SubResource("AtlasTexture_l11yw")
+
+[node name="Solid" type="StaticBody2D" parent="World/seat_row_d"]
+
+[node name="@CollisionShape2D@6" type="CollisionShape2D" parent="World/seat_row_d/Solid"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_ikmdh")
+
+[node name="seat_single" type="Node2D" parent="World"]
+position = Vector2(147.2, 172.8)
+
+[node name="Sprite" type="Sprite2D" parent="World/seat_single"]
+position = Vector2(0, -14)
+texture = SubResource("AtlasTexture_lp3u0")
+
+[node name="Solid" type="StaticBody2D" parent="World/seat_single"]
+
+[node name="@CollisionShape2D@7" type="CollisionShape2D" parent="World/seat_single/Solid"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_ao47t")
+
+[node name="npc_ismet" type="CharacterBody2D" parent="World" instance=ExtResource("4_dosbt")]
+position = Vector2(89.6, 188.8)
+script = ExtResource("5_pqhli")
+actor_id = "ismet"
+display_name = "İsmet"
+portrait = ExtResource("6_bcdrq")
+sprite_frames = ExtResource("7_ftnqb")
+facing = "e"
+
+[node name="Player" type="CharacterBody2D" parent="World" instance=ExtResource("8_t0h46")]
+position = Vector2(224, 192)
+script = ExtResource("9_wra8e")
+actor_id = "hoca"
+display_name = "Deniz"
+portrait = ExtResource("10_tlr54")
+portrait_moods = {
+"listening": ExtResource("13_txktt"),
+"tired": ExtResource("11_1te86"),
+"wry": ExtResource("12_4h5yp")
+}
+facing = "w"
+
+[node name="Above" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_w4atn")
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="aisle_back" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(448, 192)
+
+[node name="dolmus_front" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(192, 185.6)
+
+[node name="valley_view" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(320, 108.8)
+
+[node name="Triggers" type="Node2D" parent="."]
+
+[node name="EdgeWalls" type="StaticBody2D" parent="."]
+
+[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="EdgeWalls"]
+position = Vector2(320, -16)
+shape = SubResource("RectangleShape2D_k8vtw")
+
+[node name="@CollisionShape2D@9" type="CollisionShape2D" parent="EdgeWalls"]
+position = Vector2(320, 400)
+shape = SubResource("RectangleShape2D_ndsq6")
+
+[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="EdgeWalls"]
+position = Vector2(-16, 192)
+shape = SubResource("RectangleShape2D_q041w")
+
+[node name="@CollisionShape2D@11" type="CollisionShape2D" parent="EdgeWalls"]
+position = Vector2(656, 192)
+shape = SubResource("RectangleShape2D_crgt4")

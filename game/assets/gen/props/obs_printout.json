@@ -1,0 +1,14 @@
+{
+  "scale": 2,
+  "props": {
+    "printout_overlay": {
+      "region": [
+        0,
+        0,
+        256,
+        192
+      ],
+      "solid": null
+    }
+  }
+}

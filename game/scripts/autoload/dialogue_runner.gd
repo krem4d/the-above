@@ -25,6 +25,10 @@ var _mode_names: Dictionary = {}
 var _spectro_sessions: Dictionary = {}
 var _spectro_loaded := false
 
+## The instruction _step is currently executing/awaiting — diagnostics only
+## (the day1 probe's stall dump reads it); never drive logic off this.
+var debug_current_instr: Dictionary = {}
+
 
 func _ready() -> void:
 	_mode_names = {
@@ -85,6 +89,7 @@ func run_parsed(parsed: Dictionary) -> void:
 func _step(ip: int, instructions: Array, labels: Dictionary) -> int:
 	var instr: Dictionary = instructions[ip]
 	var cmd: String = instr["cmd"]
+	debug_current_instr = instr
 
 	if cmd == "say":
 		await _do_say(instr)

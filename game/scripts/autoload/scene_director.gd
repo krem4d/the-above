@@ -67,10 +67,10 @@ func get_camera() -> Camera2D:
 
 
 ## Resolves a DSL target name (used by move/face/teleport/pan) to a world
-## position: another registered actor's position, else a named node
-## (Marker2D or prop) found anywhere under the current room. Returns null
-## (not a crash) if nothing matches — dev-content gap, not a player-facing
-## fail state.
+## position: another registered actor's position, else a SpawnPoints
+## marker, else any named node under the current room. Returns null (not a
+## crash) if nothing matches — dev-content gap, not a player-facing fail
+## state.
 func resolve_position(target_name: String) -> Variant:
 	var actor: Node = get_actor(target_name)
 	if actor is Node2D:
@@ -78,6 +78,16 @@ func resolve_position(target_name: String) -> Variant:
 	if current_room == null:
 		push_warning("SceneDirector: no current room; can't resolve '%s'" % target_name)
 		return null
+	# Markers outrank props for POSITIONS: they are the authored walk-to
+	# points, and a prop may share the name (obs has both a prop and a
+	# marker named 'archive_shelf' — the prop's own solid pins a walker,
+	# the marker is the reachable spot in front of it). find_in_room()
+	# below keeps prop-first semantics for show/hide.
+	var spawn_points := current_room.get_node_or_null("SpawnPoints")
+	if spawn_points != null:
+		var marker := spawn_points.get_node_or_null(NodePath(target_name))
+		if marker is Node2D:
+			return (marker as Node2D).global_position
 	var node := current_room.find_child(target_name, true, false)
 	if node is Node2D:
 		return (node as Node2D).global_position

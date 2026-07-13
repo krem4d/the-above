@@ -1,0 +1,8 @@
+{
+  "generator": "sprites.cast_portraits",
+  "comment": "M4 dialogue portraits: one 64x64 bust per id in cast/characters.json plus hoca mood variants (hoca.png = neutral, hoca_tired, hoca_wry, hoca_listening). 32x32 art baked 2x; transparent background; whole cast holds one camera — 3/4 view facing slightly left toward the dialogue text, light from above-right. Consumes the same truth file as sprites.cast_sheets so sheets and portraits agree.",
+  "seed": 1986,
+  "cast": "../cast/characters.json",
+  "scale": 2,
+  "out_dir": "sprites/portraits"
+}

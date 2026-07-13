@@ -1,0 +1,111 @@
+{
+  "scale": 2,
+  "props": {
+    "console_bank": {
+      "region": [
+        0,
+        0,
+        128,
+        64
+      ],
+      "solid": [
+        0,
+        0,
+        128,
+        64
+      ]
+    },
+    "console_chair": {
+      "region": [
+        224,
+        0,
+        20,
+        28
+      ],
+      "solid": null
+    },
+    "rack_a": {
+      "region": [
+        128,
+        0,
+        32,
+        64
+      ],
+      "solid": [
+        0,
+        32,
+        32,
+        32
+      ]
+    },
+    "rack_b": {
+      "region": [
+        160,
+        0,
+        32,
+        64
+      ],
+      "solid": [
+        0,
+        32,
+        32,
+        32
+      ]
+    },
+    "archive_shelf": {
+      "region": [
+        0,
+        64,
+        96,
+        64
+      ],
+      "solid": [
+        0,
+        0,
+        96,
+        64
+      ]
+    },
+    "office_door": {
+      "region": [
+        192,
+        0,
+        32,
+        56
+      ],
+      "solid": null
+    },
+    "whiteboard": {
+      "region": [
+        96,
+        64,
+        64,
+        48
+      ],
+      "solid": null
+    },
+    "printer": {
+      "region": [
+        208,
+        64,
+        48,
+        36
+      ],
+      "solid": [
+        0,
+        12,
+        48,
+        24
+      ]
+    },
+    "window_dish": {
+      "region": [
+        160,
+        64,
+        48,
+        48
+      ],
+      "solid": null
+    }
+  }
+}

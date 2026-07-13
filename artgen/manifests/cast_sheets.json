@@ -1,0 +1,9 @@
+{
+  "generator": "sprites.cast_sheets",
+  "comment": "M4 Act 1 cast walk/idle sheets, one per character in cast/characters.json (hoca, yildiz the cat, fadime, musa, sukru, elif, kadir, ismet, metin, ebru, tezcan). Humans 16x24 art baked 2x -> 32x48 frames; cat 16x16 -> 32x32. Rows: idle_s, walk s/n/e/w (w = baked mirror of e), then appended idle n/e/w. Replaces sprites.placeholder_hoca; hoca's first five rows keep the committed M1 layout.",
+  "seed": 1979,
+  "cast": "../cast/characters.json",
+  "scale": 2,
+  "walk_fps": 8,
+  "out_dir": "sprites"
+}

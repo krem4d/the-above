@@ -15,6 +15,15 @@ func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
 	if args.is_empty():
 		return
+	if args.has("--day1-probe"):
+		# In-game Day-1 end-to-end driver (see tools/day1_probe.gd) — runs
+		# inside the booted game because autoloads don't exist under a bare
+		# --script main loop.
+		if DisplayServer.get_name() != "headless":
+			get_window().size = CAPTURE_SIZE
+		await get_tree().process_frame
+		add_child((load("res://tools/day1_probe.gd") as GDScript).new())
+		return
 	var opts := _parse_args(args)
 	if not (opts.tour or opts.scene_id != ""):
 		return
@@ -88,6 +97,11 @@ func _capture_entry(entry: Dictionary, abs_out: String) -> bool:
 	var host: Node = get_tree().current_scene if get_tree().current_scene else get_tree().root
 	host.add_child(instance)
 	for _i in wait_frames:
+		await RenderingServer.frame_post_draw
+	if bool(entry.get("hide_dialogue", false)) and DialogueRunner.dialogue_box != null:
+		# An earlier entry (e2e demo) may have left the shared DialogueBox
+		# mid-line; room shots want the bare scene.
+		DialogueRunner.dialogue_box.hide_box()
 		await RenderingServer.frame_post_draw
 	var ok := _save_viewport_png(abs_out.path_join(id + ".png"))
 	instance.free()

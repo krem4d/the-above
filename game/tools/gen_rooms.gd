@@ -85,6 +85,7 @@ func _build_room(layout_path: String) -> Error:
 	var room_w := 0
 	if room_h > 0:
 		room_w = String(ground[0]).length()
+	root.set("room_size", Vector2i(room_w, room_h))
 
 	for layer_key in TILE_LAYERS:
 		if layer_key == "above":
@@ -272,7 +273,9 @@ func _add_npc(world: Node2D, root: Node2D, npc: Dictionary) -> void:
 	instance.set("facing", String(npc.get("facing", "s")))
 	var frames_path := SPRITES_DIR + String(npc.get("frames", actor_id)) + "_frames.tres"
 	if ResourceLoader.exists(frames_path):
-		(instance.get_node("Sprite") as AnimatedSprite2D).sprite_frames = load(frames_path)
+		# Root-level export, NOT the nested $Sprite child — child overrides
+		# are dropped by PackedScene.pack(); actor.gd applies it in _ready.
+		instance.set("sprite_frames", load(frames_path))
 	else:
 		push_warning("gen_rooms: no frames at %s (npc '%s' keeps defaults)" % [frames_path, actor_id])
 	var portrait_path := SPRITES_DIR + "portraits/" + String(npc.get("portrait", actor_id)) + ".png"
@@ -287,6 +290,11 @@ func _add_player(world: Node2D, root: Node2D, layout: Dictionary, room_w: int, r
 	var instance: Node2D = (load(PLAYER_SCENE) as PackedScene).instantiate()
 	instance.position = _tile_to_px(player_cfg.get("spawn", [1, 1]))
 	instance.set("facing", String(player_cfg.get("facing", "s")))
+	# The player IS actor 'hoca' — every .scene targets him by that id; without
+	# it the instance never self-registers with SceneDirector (graybox.tscn
+	# sets it by hand, generated rooms must bake it too).
+	instance.set("actor_id", "hoca")
+	instance.set("display_name", String(player_cfg.get("display_name", "Deniz")))
 	if ResourceLoader.exists(SPRITES_DIR + "portraits/hoca.png"):
 		instance.set("portrait", load(SPRITES_DIR + "portraits/hoca.png"))
 		var moods := {}
@@ -295,11 +303,9 @@ func _add_player(world: Node2D, root: Node2D, layout: Dictionary, room_w: int, r
 			if ResourceLoader.exists(mood_path):
 				moods[mood] = load(mood_path)
 		instance.set("portrait_moods", moods)
-	var camera: Camera2D = instance.get_node("Camera2D")
-	camera.limit_left = 0
-	camera.limit_top = 0
-	camera.limit_right = room_w * CELL
-	camera.limit_bottom = room_h * CELL
+	# Camera limits are NOT baked here: property overrides on a nested
+	# instance child (Player/Camera2D) are dropped by PackedScene.pack().
+	# room.gd applies them at runtime from the baked room_size.
 	world.add_child(instance)
 	instance.owner = root
 

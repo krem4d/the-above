@@ -1,0 +1,10 @@
+{
+  "generator": "tiles.obs_interior",
+  "comment": "M4 Sarptepe observatory control room: 4-tile sheet (floor_lino, floor_lino_var, wall_panel, window_sky; 16x16 art baked 2x -> 32x32) + 9-prop console/rack/archive sheet + the Day-1 printout overlay (obs_printout.png, 128x96 art -> 256x192, the ONLY signal-magenta canvas). Fluorescent-dim dusk; stone/ship/paper/amber/rose/crt/void ramps; signal only on the printout trace.",
+  "seed": 19860411,
+  "art_cell": 16,
+  "scale": 2,
+  "out_tiles": "tiles/obs_sheet.png",
+  "out_props": "props/obs_props.png",
+  "out_printout": "props/obs_printout.png"
+}

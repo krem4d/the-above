@@ -1,0 +1,50 @@
+{
+  "frame": [
+    32,
+    32
+  ],
+  "cols": 4,
+  "rows": 8,
+  "anims": {
+    "idle_s": {
+      "row": 0,
+      "frames": 1,
+      "fps": 1
+    },
+    "walk_s": {
+      "row": 1,
+      "frames": 4,
+      "fps": 8
+    },
+    "walk_n": {
+      "row": 2,
+      "frames": 4,
+      "fps": 8
+    },
+    "walk_e": {
+      "row": 3,
+      "frames": 4,
+      "fps": 8
+    },
+    "walk_w": {
+      "row": 4,
+      "frames": 4,
+      "fps": 8
+    },
+    "idle_n": {
+      "row": 5,
+      "frames": 1,
+      "fps": 1
+    },
+    "idle_e": {
+      "row": 6,
+      "frames": 1,
+      "fps": 1
+    },
+    "idle_w": {
+      "row": 7,
+      "frames": 1,
+      "fps": 1
+    }
+  }
+}

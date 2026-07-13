@@ -66,8 +66,7 @@ fade in 1.0
 pan sky 2.5
 say hoca d1.town.hoca.008
 pan hoca 1.0
-say sys d1.town.sys.001            # save; the typed observer name appears on the slot for the first time
-setflag d1_complete true
-mission m_d2_morning
+say sys d1.town.sys.001            # diegetic save confirmation. Canon lock IX: the typed observer name surfaces on the save SLOT (M5 slot UI) / phantom slot / Act 3 inscription — never in Act 1 dialogue, so this line names no one.
+setflag d1_complete true            # DayLoop rolls to Day 2 here: it awaits scene_finished, so `fade`/`end_scene` are the only commands that may follow. Day-2 setup (arming m_d2_morning) is d2_wake's job, not this scene's.
 fade out 2.0
 end_scene

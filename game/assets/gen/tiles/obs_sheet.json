@@ -1,0 +1,17 @@
+{
+  "grid": {
+    "cell": 32,
+    "cols": 4,
+    "rows": 1
+  },
+  "tiles": [
+    "floor_lino",
+    "floor_lino_var",
+    "wall_panel",
+    "window_sky"
+  ],
+  "solid": [
+    "wall_panel",
+    "window_sky"
+  ]
+}

@@ -1,9 +1,0 @@
-{
-  "generator": "sprites.placeholder_hoca",
-  "comment": "M1 placeholder Hoca spritesheet: 16x24 art px baked 2x -> 32x48 frames; 4 cols x 5 rows (idle_s, walk_s, walk_n, walk_e, walk_w-mirrored). earth + amber ramps.",
-  "seed": 811,
-  "art_frame": [16, 24],
-  "scale": 2,
-  "walk_fps": 8,
-  "out": "sprites/hoca_sheet.png"
-}

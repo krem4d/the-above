@@ -157,3 +157,25 @@ deviations D1–D5, the M3 tour-PNG closure), commit the whole M4 slice on `feat
 fast-forward merge to `master` (M3 precedent), and push `master` to `origin`
 (sanctioned by AGENTS.md at a Codex-to-Claude handoff). Keep generated art, `.tres`, room
 `.tscn`, and `.import` files in the commit — generated output is deliberately committed.
+
+## 8. Outcome (M4 closed)
+
+Shipped complete: 4 room tilesets, 11 cast walk sheets + 14 portraits, 4 codegen room scenes, the
+mission/day-loop/name-entry systems, and Day 1 playable end-to-end (`--day1-probe` PASS through the
+Day-2 roll). Validation green: 151/151 GdUnit, 8/8 pytest, tour + 8 Day-1 beat PNGs reviewed.
+
+Post-implementation adversarial review surfaced 6 findings (verifier pass truncated by a model usage
+limit, so triaged by hand). Two were genuine Day-1 defects and are fixed in this slice:
+
+1. `d1.town.sys.001` showed a literal `{name}` (`_do_say` passes no format params). Fixed by removing
+   the token, **not** substituting — canon lock IX bars the observer name from Act 1 dialogue (it may
+   appear only in save slots / the phantom slot / one Act 3 inscription; same precedent as the dormant
+   spectro `decode_text`).
+2. `d1_observatory` armed `mission m_d2_morning` before its closing `fade`, enabling MISSION-mode exits
+   during the fade. Removed; day-2 setup is `d2_wake`'s job. New authoring rule: after
+   `setflag dN_complete`, only `fade`/`end_scene` may follow (DayLoop awaits `scene_finished`).
+
+The remaining four are M5 scope (Days 2–7 wiring) and are logged in `PROGRESS.md` → Known open items:
+wake scripts don't arm their morning mission (soft-lock past Day 1); end-of-day observatory tails and
+`m_d7_sendoff` need the same audit; autosave doesn't yet persist `current_mission_id` for a
+continue-from-save.

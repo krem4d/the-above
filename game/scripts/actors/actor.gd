@@ -7,6 +7,7 @@ extends CharacterBody2D
 signal arrived
 
 const ARRIVE_EPSILON := 1.0
+const STALL_GIVE_UP_SECONDS := 0.6
 
 ## DSL actor id (e.g. "hoca", "ada") this instance registers under with
 ## SceneDirector — move/face/teleport/say address actors by this name.
@@ -18,6 +19,12 @@ const ARRIVE_EPSILON := 1.0
 @export var portrait_moods: Dictionary = {}
 
 @export var move_speed: float = 70.0
+
+## Per-character SpriteFrames, baked by gen_rooms as a ROOT-level property —
+## setting it on the nested $Sprite child directly does not survive
+## PackedScene.pack() (same trap as the player camera limits). Null keeps
+## the actor.tscn default (hoca's frames).
+@export var sprite_frames: SpriteFrames = null
 
 @export var facing: String = "s":
 	set(value):
@@ -34,6 +41,8 @@ var _walking := false
 
 
 func _ready() -> void:
+	if sprite_frames != null:
+		sprite.sprite_frames = sprite_frames
 	play_idle()
 	if actor_id != "":
 		SceneDirector.register_actor(actor_id, self)
@@ -56,8 +65,15 @@ func get_portrait(mood: String = "") -> Texture2D:
 
 ## Coroutine: walk in a straight line to `target` (global), then emit `arrived`.
 ## Usage: `await actor.walk_to(pos)` or connect to `arrived`.
+##
+## Blocked-walk watchdog: cutscene choreography must ALWAYS complete (design
+## law — the story can never soft-lock). If a solid pins the body so it stops
+## making progress, give it a beat, then snap to the authored mark with a
+## warning. A one-frame visual pop in a broken authored path beats a locked
+## game; the warning surfaces the bad marker/solid in probe and tour logs.
 func walk_to(target: Vector2) -> void:
 	_walking = true
+	var stalled_seconds := 0.0
 	while _walking and is_inside_tree():
 		await get_tree().physics_frame
 		var to_target := target - global_position
@@ -66,11 +82,23 @@ func walk_to(target: Vector2) -> void:
 			global_position = target.round()
 			_walking = false
 			break
+		var before := global_position
 		velocity = to_target.normalized() * move_speed
 		face_toward(to_target)
 		play_walk()
 		move_and_slide()
 		position = position.round()
+		if global_position.distance_to(before) < step * 0.25:
+			stalled_seconds += get_physics_process_delta_time()
+			if stalled_seconds >= STALL_GIVE_UP_SECONDS:
+				push_warning("Actor '%s': walk_to blocked at %s en route to %s — snapping (check the room's solids)" % [
+					actor_id, global_position, target,
+				])
+				global_position = target.round()
+				_walking = false
+				break
+		else:
+			stalled_seconds = 0.0
 	velocity = Vector2.ZERO
 	_walking = false
 	play_idle()
