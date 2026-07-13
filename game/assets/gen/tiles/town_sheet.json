@@ -1,0 +1,16 @@
+{
+  "grid": {
+    "cell": 32,
+    "cols": 6,
+    "rows": 1
+  },
+  "tiles": [
+    "cobble",
+    "cobble_var",
+    "dirt",
+    "dirt_var",
+    "scrub",
+    "scrub_var"
+  ],
+  "solid": []
+}

@@ -5,32 +5,54 @@ extends SceneTree
 ##   godot --path game --headless --import
 ##   godot --path game --headless --script res://tools/gen_resources.gd
 ##
-## Idempotent: output depends only on the sidecars. Atlas contract is
-## append-only (plan section 5) — tile indices and sheet rows never move,
-## so regenerating art never invalidates committed scenes.
+## Generic since M4: every assets/gen/tiles/<stem>_sheet.json becomes
+## <stem>_tileset.tres and every assets/gen/sprites/<stem>_sheet.json
+## becomes <stem>_frames.tres. Idempotent: output depends only on the
+## sidecars. Atlas contract is append-only (plan section 5) — tile indices
+## and sheet rows never move, so regenerating art never invalidates
+## committed scenes.
 
-const TILES_SHEET := "res://assets/gen/tiles/graybox_sheet.png"
-const TILES_SIDECAR := "res://assets/gen/tiles/graybox_sheet.json"
-const TILESET_OUT := "res://assets/gen/tiles/graybox_tileset.tres"
+const TILES_DIR := "res://assets/gen/tiles/"
+const SPRITES_DIR := "res://assets/gen/sprites/"
+const SHEET_SUFFIX := "_sheet.json"
 
-const HOCA_SHEET := "res://assets/gen/sprites/hoca_sheet.png"
-const HOCA_SIDECAR := "res://assets/gen/sprites/hoca_sheet.json"
-const FRAMES_OUT := "res://assets/gen/sprites/hoca_frames.tres"
-
-const SOLID_TILES := ["wall"]  # tiles that get a full-cell collision polygon
+## Fallback for sidecars that predate the "solid" key (M1 graybox).
+const DEFAULT_SOLID := ["wall"]
 
 
 func _initialize() -> void:
 	var failed := false
-	if _build_tileset() != OK:
-		failed = true
-	if _build_sprite_frames() != OK:
+	var built := 0
+	for stem in _sheet_stems(TILES_DIR):
+		if _build_tileset(stem) == OK:
+			built += 1
+		else:
+			failed = true
+	for stem in _sheet_stems(SPRITES_DIR):
+		if _build_sprite_frames(stem) == OK:
+			built += 1
+		else:
+			failed = true
+	if built == 0:
+		push_error("gen_resources: no *_sheet.json sidecars found (run `make art` first)")
 		failed = true
 	if failed:
 		push_error("gen_resources: FAILED")
 	else:
-		print("gen_resources: wrote %s and %s" % [TILESET_OUT, FRAMES_OUT])
+		print("gen_resources: wrote %d resources" % built)
 	quit(1 if failed else 0)
+
+
+func _sheet_stems(dir_path: String) -> Array[String]:
+	var stems: Array[String] = []
+	var dir := DirAccess.open(dir_path)
+	if dir == null:
+		return stems
+	for file in dir.get_files():
+		if file.ends_with(SHEET_SUFFIX):
+			stems.append(file.trim_suffix(SHEET_SUFFIX))
+	stems.sort()  # deterministic build order/output
+	return stems
 
 
 func _load_sidecar(path: String) -> Dictionary:
@@ -51,9 +73,9 @@ func _load_texture(path: String) -> Texture2D:
 	return load(path)
 
 
-func _build_tileset() -> Error:
-	var sidecar := _load_sidecar(TILES_SIDECAR)
-	var texture := _load_texture(TILES_SHEET)
+func _build_tileset(stem: String) -> Error:
+	var sidecar := _load_sidecar(TILES_DIR + stem + SHEET_SUFFIX)
+	var texture := _load_texture(TILES_DIR + stem + "_sheet.png")
 	if sidecar.is_empty() or texture == null:
 		return FAILED
 	var grid: Dictionary = sidecar.get("grid", {})
@@ -61,6 +83,7 @@ func _build_tileset() -> Error:
 	var cols := int(grid.get("cols", 0))
 	var rows := int(grid.get("rows", 1))
 	var tile_names: Array = sidecar.get("tiles", [])
+	var solid_names: Array = sidecar.get("solid", DEFAULT_SOLID)
 
 	var tile_set := TileSet.new()
 	tile_set.tile_size = Vector2i(cell, cell)
@@ -81,16 +104,16 @@ func _build_tileset() -> Error:
 			var coords := Vector2i(col, row)
 			source.create_tile(coords)
 			var index := row * cols + col
-			if index < tile_names.size() and tile_names[index] in SOLID_TILES:
+			if index < tile_names.size() and tile_names[index] in solid_names:
 				var data := source.get_tile_data(coords, 0)
 				data.add_collision_polygon(0)
 				data.set_collision_polygon_points(0, 0, full_cell)
-	return ResourceSaver.save(tile_set, TILESET_OUT)
+	return ResourceSaver.save(tile_set, TILES_DIR + stem + "_tileset.tres")
 
 
-func _build_sprite_frames() -> Error:
-	var sidecar := _load_sidecar(HOCA_SIDECAR)
-	var texture := _load_texture(HOCA_SHEET)
+func _build_sprite_frames(stem: String) -> Error:
+	var sidecar := _load_sidecar(SPRITES_DIR + stem + SHEET_SUFFIX)
+	var texture := _load_texture(SPRITES_DIR + stem + "_sheet.png")
 	if sidecar.is_empty() or texture == null:
 		return FAILED
 	var frame_size: Array = sidecar.get("frame", [32, 48])
@@ -115,4 +138,4 @@ func _build_sprite_frames() -> Error:
 			atlas.atlas = texture
 			atlas.region = Rect2(i * fw, row * fh, fw, fh)
 			frames.add_frame(anim_name, atlas)
-	return ResourceSaver.save(frames, FRAMES_OUT)
+	return ResourceSaver.save(frames, SPRITES_DIR + stem + "_frames.tres")

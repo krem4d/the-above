@@ -1,0 +1,329 @@
+{
+  "room_id": "town",
+  "scene_name": "Town",
+  "out": "res://scenes/rooms/act1/town.tscn",
+  "tileset": "res://assets/gen/tiles/town_tileset.tres",
+  "tile_legend": {
+    "c": "cobble",
+    "C": "cobble_var",
+    "d": "dirt",
+    "D": "dirt_var",
+    "s": "scrub",
+    "S": "scrub_var"
+  },
+  "layers": {
+    "ground": [
+      "sssssssssSsSssssssssssssssssss",
+      "ssssssssssssssssssssssSsssssSs",
+      "SSSsssssssSsSssssssssSssssssss",
+      "sssscccccCccccccCcccccccCcsSSS",
+      "ssssccccCccccccccCccccccccssss",
+      "ssssCcccccCccCccccccccccccssss",
+      "ssSscccccccCcccCcccccccccCssss",
+      "sssscCccccCccccccccccccCccssss",
+      "ssssccccccCcccccccccccccccSssS",
+      "ssssccccccccccCccccCccccccssss",
+      "sSSscccccccccccCcccCdddDdddsss",
+      "SsssccccccccccccCcCcdddDdDdsss",
+      "ddddDdddddddDddddddddddddddDDd",
+      "DdddddddddddDDddddddDddddddddd",
+      "dddddddDDddddddddDdddddddddddD",
+      "SsssssssssssssSssssssSssssssss",
+      "SssssssssssssssSssssssSsssssss"
+    ],
+    "floor_decor": [
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              "
+    ],
+    "walls": [
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              ",
+      "                              "
+    ],
+    "above": []
+  },
+  "props": [
+    {
+      "name": "bakery_facade",
+      "sheet": "town_props",
+      "pos": [
+        4.0,
+        3.0
+      ]
+    },
+    {
+      "name": "bakkal_facade",
+      "sheet": "town_props",
+      "pos": [
+        9.5,
+        3.0
+      ]
+    },
+    {
+      "name": "teahouse_facade",
+      "sheet": "town_props",
+      "pos": [
+        16.0,
+        3.0
+      ]
+    },
+    {
+      "name": "house_a",
+      "sheet": "town_props",
+      "pos": [
+        22.0,
+        3.0
+      ]
+    },
+    {
+      "name": "house_b",
+      "sheet": "town_props",
+      "pos": [
+        26.8,
+        3.0
+      ]
+    },
+    {
+      "name": "cesme",
+      "sheet": "town_props",
+      "pos": [
+        6.5,
+        9.0
+      ]
+    },
+    {
+      "name": "tea_table",
+      "sheet": "town_props",
+      "pos": [
+        14.2,
+        5.6
+      ]
+    },
+    {
+      "name": "extra_chair",
+      "sheet": "town_props",
+      "pos": [
+        18.2,
+        4.4
+      ]
+    },
+    {
+      "name": "minibus",
+      "sheet": "town_props",
+      "pos": [
+        24.0,
+        12.2
+      ]
+    },
+    {
+      "name": "stop_sign",
+      "sheet": "town_props",
+      "pos": [
+        21.6,
+        11.8
+      ]
+    },
+    {
+      "name": "poplar_a",
+      "sheet": "town_props",
+      "prop": "poplar",
+      "pos": [
+        1.6,
+        6.0
+      ]
+    },
+    {
+      "name": "poplar_b",
+      "sheet": "town_props",
+      "prop": "poplar",
+      "pos": [
+        28.4,
+        7.5
+      ]
+    },
+    {
+      "name": "poplar_c",
+      "sheet": "town_props",
+      "prop": "poplar",
+      "pos": [
+        12.4,
+        3.1
+      ]
+    },
+    {
+      "name": "poplar_small_a",
+      "sheet": "town_props",
+      "prop": "poplar_small",
+      "pos": [
+        2.2,
+        15.8
+      ]
+    },
+    {
+      "name": "poplar_small_b",
+      "sheet": "town_props",
+      "prop": "poplar_small",
+      "pos": [
+        27.8,
+        15.6
+      ]
+    }
+  ],
+  "markers": {
+    "town_south": [
+      15.0,
+      14.5
+    ],
+    "bakery_door": [
+      4.0,
+      3.6
+    ],
+    "bakkal_door": [
+      9.5,
+      3.6
+    ],
+    "teahouse_door": [
+      16.0,
+      3.6
+    ],
+    "square_center": [
+      12.5,
+      8.0
+    ],
+    "hoca_front": [
+      12.5,
+      9.4
+    ],
+    "home_door": [
+      2.5,
+      13.0
+    ],
+    "dolmus_stop": [
+      23.0,
+      13.4
+    ],
+    "sky": [
+      15.0,
+      2.0
+    ]
+  },
+  "npcs": [
+    {
+      "actor_id": "fadime",
+      "display_name": "Fadime",
+      "frames": "fadime",
+      "portrait": "fadime",
+      "pos": [
+        3.4,
+        4.4
+      ],
+      "facing": "s"
+    },
+    {
+      "actor_id": "musa",
+      "display_name": "Musa",
+      "frames": "musa",
+      "portrait": "musa",
+      "pos": [
+        10.2,
+        4.4
+      ],
+      "facing": "s"
+    },
+    {
+      "actor_id": "sukru",
+      "display_name": "Şükrü",
+      "frames": "sukru",
+      "portrait": "sukru",
+      "pos": [
+        13.2,
+        5.9
+      ],
+      "facing": "w"
+    },
+    {
+      "actor_id": "kadir",
+      "display_name": "Kadir",
+      "frames": "kadir",
+      "portrait": "kadir",
+      "pos": [
+        16.8,
+        4.4
+      ],
+      "facing": "s"
+    },
+    {
+      "actor_id": "elif",
+      "display_name": "Elif",
+      "frames": "elif",
+      "portrait": "elif",
+      "pos": [
+        19.5,
+        9.0
+      ],
+      "facing": "w"
+    }
+  ],
+  "player": {
+    "spawn": [
+      15.0,
+      14.0
+    ],
+    "facing": "n"
+  },
+  "exits": [
+    {
+      "id": "dolmus_stop",
+      "pos": [
+        22,
+        12
+      ],
+      "size": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "home_door",
+      "pos": [
+        1,
+        12
+      ],
+      "size": [
+        1,
+        2
+      ]
+    }
+  ],
+  "edge_collision": true,
+  "night_tint": true
+}

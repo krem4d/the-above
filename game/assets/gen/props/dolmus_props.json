@@ -1,0 +1,65 @@
+{
+  "scale": 2,
+  "props": {
+    "window_valley": {
+      "region": [
+        0,
+        0,
+        128,
+        32
+      ],
+      "solid": null
+    },
+    "dashboard": {
+      "region": [
+        0,
+        32,
+        64,
+        36
+      ],
+      "solid": [
+        0,
+        0,
+        64,
+        36
+      ]
+    },
+    "seat_row": {
+      "region": [
+        64,
+        32,
+        40,
+        28
+      ],
+      "solid": [
+        0,
+        12,
+        40,
+        16
+      ]
+    },
+    "seat_single": {
+      "region": [
+        104,
+        32,
+        24,
+        28
+      ],
+      "solid": [
+        0,
+        12,
+        24,
+        16
+      ]
+    },
+    "bus_door": {
+      "region": [
+        128,
+        0,
+        32,
+        48
+      ],
+      "solid": null
+    }
+  }
+}

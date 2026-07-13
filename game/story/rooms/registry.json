@@ -1,0 +1,7 @@
+{
+  "notes": "room_id -> committed scene path; loaded by main.gd into SceneDirector. Layout JSONs in this directory are the reviewable source; scenes/rooms/act1/*.tscn are gen_rooms.gd output (make resources).",
+  "home": "res://scenes/rooms/act1/home.tscn",
+  "town": "res://scenes/rooms/act1/town.tscn",
+  "dolmus": "res://scenes/rooms/act1/dolmus.tscn",
+  "obs": "res://scenes/rooms/act1/obs.tscn"
+}

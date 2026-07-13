@@ -13,6 +13,7 @@ enum ControlMode { CUTSCENE, FREE_ROAM, MISSION, MINIGAME }
 
 signal mode_changed(mode: ControlMode)
 signal room_changed(room_id: String)
+signal mission_changed(mission_id: String)
 
 ## Set explicitly by main.gd once Main.tscn is in the tree — autoloads
 ## _ready() before the main scene exists, so an absolute get_node() path
@@ -27,7 +28,12 @@ var mode: ControlMode = ControlMode.CUTSCENE:
 		mode_changed.emit(mode)
 
 var current_room: Node = null
-var current_mission_id: String = ""
+var current_mission_id: String = "":
+	set(value):
+		if current_mission_id == value:
+			return
+		current_mission_id = value
+		mission_changed.emit(current_mission_id)
 
 var _actors: Dictionary = {}   ## actor_id (String) -> Node
 var _camera: Camera2D = null

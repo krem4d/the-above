@@ -8,12 +8,17 @@ extends Node
 ## — see the SceneDirector.world_holder comment for why this can't be an
 ## @onready absolute path (autoloads _ready() before the main scene exists).
 
+## Emitted when a run_scene()/run_parsed() coroutine reaches its end —
+## MissionSystem and DayLoop serialize their scene chaining on this.
+signal scene_finished
+
 const SPECTRO_LIBRARY_PATH := "res://story/signals/spectro_sessions.json"
 
 var dialogue_box: DialogueBox = null
 var choice_menu: ChoiceMenu = null
 var fade_rect: ColorRect = null
 var waterfall_view: WaterfallView = null
+var name_entry_panel: NameEntryPanel = null
 
 var _running := false
 var _mode_names: Dictionary = {}
@@ -30,11 +35,15 @@ func _ready() -> void:
 	}
 
 
-func setup_ui(box: DialogueBox, menu: ChoiceMenu, fade: ColorRect, waterfall: WaterfallView) -> void:
+func setup_ui(
+	box: DialogueBox, menu: ChoiceMenu, fade: ColorRect, waterfall: WaterfallView,
+	name_entry: NameEntryPanel = null,
+) -> void:
 	dialogue_box = box
 	choice_menu = menu
 	fade_rect = fade
 	waterfall_view = waterfall
+	name_entry_panel = name_entry
 	dialogue_box.hide_box()
 
 
@@ -43,6 +52,9 @@ func is_running() -> bool:
 
 
 func run_scene(scene_path: String) -> void:
+	if dialogue_box == null:
+		push_warning("DialogueRunner: setup_ui not called — cannot run %s" % scene_path)
+		return
 	var parsed := load_and_parse(scene_path)
 	if not parsed["ok"]:
 		push_error("DialogueRunner: %s (%s)" % [parsed["error"], scene_path])
@@ -67,6 +79,7 @@ func run_parsed(parsed: Dictionary) -> void:
 	if dialogue_box:
 		dialogue_box.hide_box()
 	_running = false
+	scene_finished.emit()
 
 
 func _step(ip: int, instructions: Array, labels: Dictionary) -> int:
@@ -122,6 +135,8 @@ func _step(ip: int, instructions: Array, labels: Dictionary) -> int:
 		await _do_fade(instr)
 	elif cmd == "spectro":
 		await _do_spectro(instr)
+	elif cmd == "name_entry":
+		await _do_name_entry()
 	elif cmd == "mode":
 		_do_mode(instr)
 	elif cmd == "mission":
@@ -137,17 +152,47 @@ func _step(ip: int, instructions: Array, labels: Dictionary) -> int:
 
 func _do_say(instr: Dictionary) -> void:
 	var actor: Node = SceneDirector.get_actor(instr["actor_id"])
-	# Fallback is the raw actor_id, never a case-transform of it (Turkish
-	# İ/ı casing safety, plan section 5) — real content sets display_name.
+	# Fallback chain, never a case-transform (Turkish İ/ı casing safety):
+	# actor display_name -> ui.csv "speaker.<id>" (for the bodiless voices:
+	# radio, sys) -> the raw actor_id.
 	var speaker_name: String = instr["actor_id"]
 	var portrait: Texture2D = null
 	if actor != null:
 		if "display_name" in actor and actor.display_name != "":
 			speaker_name = actor.display_name
-		if "portrait" in actor and actor.portrait != null:
+		if actor.has_method("get_portrait"):
+			portrait = actor.get_portrait(String(instr.get("mood", "")))
+		elif "portrait" in actor and actor.portrait != null:
 			portrait = actor.portrait
+	else:
+		var speaker_key := "speaker." + String(instr["actor_id"])
+		var localized := Locale.t(speaker_key)
+		if localized != speaker_key:
+			speaker_name = localized
 	dialogue_box.show_line(Locale.t(instr["key"]), speaker_name, portrait)
 	await dialogue_box.advance_requested
+
+
+## One diegetic line outside any scene script (M4: blocked-exit refusals).
+## Runner-owned so nothing else touches the DialogueBox directly.
+func show_barrier_line(text: String) -> void:
+	if dialogue_box == null or _running:
+		return
+	dialogue_box.show_line(text)
+	await dialogue_box.advance_requested
+	dialogue_box.hide_box()
+
+
+## The naming ritual (bible D1-S3, canon lock IX side: capturing and
+## persisting the name is canon; where it may APPEAR is the locked part).
+func _do_name_entry() -> void:
+	if name_entry_panel == null:
+		push_warning("DialogueRunner: name_entry — no panel set, keeping current name")
+		return
+	name_entry_panel.open(GameState.observer_name)
+	var typed: String = await name_entry_panel.confirmed
+	GameState.observer_name = typed
+	MetaPersistence.record_observer_name(typed)
 
 
 func _do_choice(instr: Dictionary, labels: Dictionary) -> int:

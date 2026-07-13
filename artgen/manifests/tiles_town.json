@@ -1,0 +1,9 @@
+{
+  "generator": "tiles.town_exterior",
+  "comment": "M4 Taşlıca town exterior: 6 ground tiles (cobble/dirt/scrub + variants, 16x16 art baked 2x -> 32x32) and the town-square prop sheet (facades, dolmuş, poplars, teahouse furniture, çeşme). Golden-hour autumn; stone/earth/amber/rose/ship/paper/void ramps only.",
+  "seed": 5511,
+  "art_cell": 16,
+  "scale": 2,
+  "tiles_out": "tiles/town_sheet.png",
+  "props_out": "props/town_props.png"
+}

@@ -1,0 +1,193 @@
+{
+  "room_id": "home",
+  "scene_name": "Home",
+  "out": "res://scenes/rooms/act1/home.tscn",
+  "tileset": "res://assets/gen/tiles/home_tileset.tres",
+  "tile_legend": {
+    ".": "floor_wood",
+    "F": "floor_wood_var",
+    "r": "rug",
+    "#": "wall",
+    "w": "window_day"
+  },
+  "layers": {
+    "ground": [
+      "....................",
+      "F.F...........F.....",
+      "........F..........F",
+      "F...................",
+      "..............F..F..",
+      ".............F......",
+      "..F.................",
+      "......F...F...F.....",
+      "........F..F........",
+      "............F.......",
+      "....................",
+      "...................."
+    ],
+    "floor_decor": [
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "        rrrrrr      ",
+      "        rrrrrr      ",
+      "        rrrrrr      ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    "
+    ],
+    "walls": [
+      "#####w########w#####",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "####################"
+    ],
+    "above": []
+  },
+  "props": [
+    {
+      "name": "bed",
+      "sheet": "home_props",
+      "pos": [
+        2.6,
+        4.6
+      ]
+    },
+    {
+      "name": "wardrobe",
+      "sheet": "home_props",
+      "pos": [
+        5.5,
+        2.9
+      ]
+    },
+    {
+      "name": "photo_wall",
+      "sheet": "home_props",
+      "pos": [
+        8.5,
+        1.6
+      ]
+    },
+    {
+      "name": "radio_table",
+      "sheet": "home_props",
+      "pos": [
+        11.0,
+        2.7
+      ]
+    },
+    {
+      "name": "kitchen_counter",
+      "sheet": "home_props",
+      "pos": [
+        15.5,
+        2.6
+      ]
+    },
+    {
+      "name": "stove_kettle",
+      "sheet": "home_props",
+      "pos": [
+        17.8,
+        2.7
+      ]
+    },
+    {
+      "name": "cat_bowl",
+      "sheet": "home_props",
+      "pos": [
+        16.2,
+        3.6
+      ]
+    },
+    {
+      "name": "table_home",
+      "sheet": "home_props",
+      "pos": [
+        11.0,
+        6.9
+      ]
+    },
+    {
+      "name": "chair_home",
+      "sheet": "home_props",
+      "pos": [
+        12.4,
+        6.7
+      ]
+    },
+    {
+      "name": "door_home",
+      "sheet": "home_props",
+      "pos": [
+        9.5,
+        12.0
+      ]
+    }
+  ],
+  "markers": {
+    "bed": [
+      2.6,
+      5.2
+    ],
+    "kitchen_floor": [
+      16.2,
+      4.6
+    ],
+    "photo_wall_front": [
+      8.5,
+      4.0
+    ],
+    "room_center": [
+      9.5,
+      6.5
+    ]
+  },
+  "npcs": [
+    {
+      "actor_id": "yildiz",
+      "display_name": "Yıldız",
+      "frames": "yildiz",
+      "portrait": "yildiz",
+      "pos": [
+        13.0,
+        7.5
+      ],
+      "facing": "w"
+    }
+  ],
+  "player": {
+    "spawn": [
+      9.0,
+      6.0
+    ],
+    "facing": "s"
+  },
+  "exits": [
+    {
+      "id": "home_door",
+      "pos": [
+        9,
+        10
+      ],
+      "size": [
+        2,
+        1
+      ]
+    }
+  ],
+  "edge_collision": false,
+  "night_tint": false
+}

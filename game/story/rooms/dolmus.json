@@ -1,0 +1,181 @@
+{
+  "room_id": "dolmus",
+  "scene_name": "Dolmus",
+  "out": "res://scenes/rooms/act1/dolmus.tscn",
+  "tileset": "res://assets/gen/tiles/dolmus_tileset.tres",
+  "tile_legend": {
+    "f": "bus_floor",
+    "b": "bus_wall"
+  },
+  "layers": {
+    "ground": [
+      "                    ",
+      "                    ",
+      "                    ",
+      " ffffffffffffffffff ",
+      " ffffffffffffffffff ",
+      " ffffffffffffffffff ",
+      " ffffffffffffffffff ",
+      " ffffffffffffffffff ",
+      " ffffffffffffffffff ",
+      "                    ",
+      "                    ",
+      "                    "
+    ],
+    "floor_decor": [
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    ",
+      "                    "
+    ],
+    "walls": [
+      "                    ",
+      "                    ",
+      "bbbbbbbbbbbbbbbbbbbb",
+      "b                  b",
+      "b                  b",
+      "b                  b",
+      "b                  b",
+      "b                  b",
+      "bbbbbbbbbbbbbbbbbbbb",
+      "                    ",
+      "                    ",
+      "                    "
+    ],
+    "above": []
+  },
+  "props": [
+    {
+      "name": "window_valley_a",
+      "sheet": "dolmus_props",
+      "prop": "window_valley",
+      "pos": [
+        5.0,
+        3.0
+      ]
+    },
+    {
+      "name": "window_valley_b",
+      "sheet": "dolmus_props",
+      "prop": "window_valley",
+      "pos": [
+        10.0,
+        3.0
+      ]
+    },
+    {
+      "name": "window_valley_c",
+      "sheet": "dolmus_props",
+      "prop": "window_valley",
+      "pos": [
+        15.0,
+        3.0
+      ]
+    },
+    {
+      "name": "dashboard",
+      "sheet": "dolmus_props",
+      "pos": [
+        2.6,
+        4.6
+      ]
+    },
+    {
+      "name": "bus_door",
+      "sheet": "dolmus_props",
+      "pos": [
+        18.0,
+        8.9
+      ]
+    },
+    {
+      "name": "seat_row_a",
+      "sheet": "dolmus_props",
+      "prop": "seat_row",
+      "pos": [
+        6.5,
+        8.2
+      ]
+    },
+    {
+      "name": "seat_row_b",
+      "sheet": "dolmus_props",
+      "prop": "seat_row",
+      "pos": [
+        9.5,
+        8.2
+      ]
+    },
+    {
+      "name": "seat_row_c",
+      "sheet": "dolmus_props",
+      "prop": "seat_row",
+      "pos": [
+        12.5,
+        8.2
+      ]
+    },
+    {
+      "name": "seat_row_d",
+      "sheet": "dolmus_props",
+      "prop": "seat_row",
+      "pos": [
+        15.5,
+        8.2
+      ]
+    },
+    {
+      "name": "seat_single",
+      "sheet": "dolmus_props",
+      "pos": [
+        4.6,
+        5.4
+      ]
+    }
+  ],
+  "markers": {
+    "dolmus_front": [
+      6.0,
+      5.8
+    ],
+    "valley_view": [
+      10.0,
+      3.4
+    ],
+    "aisle_back": [
+      14.0,
+      6.0
+    ]
+  },
+  "npcs": [
+    {
+      "actor_id": "ismet",
+      "display_name": "İsmet",
+      "frames": "ismet",
+      "portrait": "ismet",
+      "pos": [
+        2.8,
+        5.9
+      ],
+      "facing": "e"
+    }
+  ],
+  "player": {
+    "spawn": [
+      7.0,
+      6.0
+    ],
+    "facing": "w"
+  },
+  "exits": [],
+  "edge_collision": true,
+  "night_tint": false
+}

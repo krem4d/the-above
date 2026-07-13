@@ -1,0 +1,130 @@
+{
+  "scale": 2,
+  "props": {
+    "bed": {
+      "region": [
+        0,
+        0,
+        48,
+        64
+      ],
+      "solid": [
+        0,
+        22,
+        48,
+        42
+      ]
+    },
+    "kitchen_counter": {
+      "region": [
+        0,
+        64,
+        64,
+        32
+      ],
+      "solid": [
+        0,
+        0,
+        64,
+        32
+      ]
+    },
+    "stove_kettle": {
+      "region": [
+        128,
+        0,
+        32,
+        40
+      ],
+      "solid": [
+        2,
+        22,
+        28,
+        18
+      ]
+    },
+    "cat_bowl": {
+      "region": [
+        96,
+        48,
+        16,
+        12
+      ],
+      "solid": null
+    },
+    "photo_wall": {
+      "region": [
+        64,
+        64,
+        48,
+        32
+      ],
+      "solid": null
+    },
+    "radio_table": {
+      "region": [
+        160,
+        0,
+        32,
+        40
+      ],
+      "solid": [
+        2,
+        18,
+        28,
+        22
+      ]
+    },
+    "wardrobe": {
+      "region": [
+        48,
+        0,
+        48,
+        64
+      ],
+      "solid": [
+        0,
+        32,
+        48,
+        32
+      ]
+    },
+    "table_home": {
+      "region": [
+        112,
+        64,
+        48,
+        32
+      ],
+      "solid": [
+        2,
+        0,
+        44,
+        28
+      ]
+    },
+    "chair_home": {
+      "region": [
+        160,
+        64,
+        20,
+        28
+      ],
+      "solid": [
+        2,
+        14,
+        16,
+        14
+      ]
+    },
+    "door_home": {
+      "region": [
+        96,
+        0,
+        32,
+        48
+      ],
+      "solid": null
+    }
+  }
+}

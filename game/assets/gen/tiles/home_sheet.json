@@ -1,0 +1,18 @@
+{
+  "grid": {
+    "cell": 32,
+    "cols": 5,
+    "rows": 1
+  },
+  "tiles": [
+    "floor_wood",
+    "floor_wood_var",
+    "rug",
+    "wall",
+    "window_day"
+  ],
+  "solid": [
+    "wall",
+    "window_day"
+  ]
+}

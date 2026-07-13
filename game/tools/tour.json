@@ -28,5 +28,25 @@
     "id": "waterfall",
     "scene": "res://scenes/minigames/waterfall_demo.tscn",
     "wait_frames": 30
+  },
+  {
+    "id": "room_home",
+    "scene": "res://scenes/rooms/act1/home.tscn",
+    "wait_frames": 20
+  },
+  {
+    "id": "room_town",
+    "scene": "res://scenes/rooms/act1/town.tscn",
+    "wait_frames": 20
+  },
+  {
+    "id": "room_dolmus",
+    "scene": "res://scenes/rooms/act1/dolmus.tscn",
+    "wait_frames": 20
+  },
+  {
+    "id": "room_obs",
+    "scene": "res://scenes/rooms/act1/obs.tscn",
+    "wait_frames": 20
   }
 ]

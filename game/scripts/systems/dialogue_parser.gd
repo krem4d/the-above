@@ -142,6 +142,12 @@ static func parse(text: String) -> Dictionary:
 			if not rest.is_empty():
 				return _fail(result, line_no, "'end_scene' takes no arguments")
 			instructions.append({"cmd": "end_scene", "line": line_no})
+		elif cmd == "name_entry":
+			# The Day-1 naming ritual (bible D1-S3): the logbook terminal
+			# prompts OBSERVER: and the engine captures typed input.
+			if not rest.is_empty():
+				return _fail(result, line_no, "'name_entry' takes no arguments")
+			instructions.append({"cmd": "name_entry", "line": line_no})
 		elif COMMANDS_ONE_ARG.has(cmd):
 			if rest.size() != 1:
 				return _fail(result, line_no, "'%s' expects exactly one argument" % cmd)

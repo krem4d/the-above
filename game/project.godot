@@ -24,6 +24,8 @@ AudioManager="*res://scripts/autoload/audio_manager.gd"
 SceneDirector="*res://scripts/autoload/scene_director.gd"
 DialogueRunner="*res://scripts/autoload/dialogue_runner.gd"
 Debug="*res://scripts/autoload/debug.gd"
+MissionSystem="*res://scripts/autoload/mission_system.gd"
+DayLoop="*res://scripts/autoload/day_loop.gd"
 
 [editor_plugins]
 

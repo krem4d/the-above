@@ -1,0 +1,14 @@
+{
+  "grid": {
+    "cell": 32,
+    "cols": 2,
+    "rows": 1
+  },
+  "tiles": [
+    "bus_floor",
+    "bus_wall"
+  ],
+  "solid": [
+    "bus_wall"
+  ]
+}

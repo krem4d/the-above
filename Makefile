@@ -29,6 +29,7 @@ tour-scene:
 resources:
 	$(GODOT) --path game --headless --import
 	$(GODOT) --path game --headless --script res://tools/gen_resources.gd
+	$(GODOT) --path game --headless --script res://tools/gen_rooms.gd
 
 export-web:
 	mkdir -p artifacts/export/web

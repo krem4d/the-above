@@ -1,0 +1,9 @@
+{
+  "generator": "tiles.home_interior",
+  "comment": "M4 Deniz's stone-house interior: 5-tile sheet (floor_wood, floor_wood_var, rug, wall, window_day; 16x16 art baked 2x -> 32x32) + 10-prop furniture sheet. Golden-hour morning; earth/paper/rose/stone/amber/ship/void ramps, no signal.",
+  "seed": 20260713,
+  "art_cell": 16,
+  "scale": 2,
+  "out_tiles": "tiles/home_sheet.png",
+  "out_props": "props/home_props.png"
+}

@@ -1,0 +1,226 @@
+{
+  "room_id": "obs",
+  "scene_name": "Observatory",
+  "out": "res://scenes/rooms/act1/obs.tscn",
+  "tileset": "res://assets/gen/tiles/obs_tileset.tres",
+  "tile_legend": {
+    ".": "floor_lino",
+    "L": "floor_lino_var",
+    "#": "wall_panel",
+    "W": "window_sky"
+  },
+  "layers": {
+    "ground": [
+      "........................",
+      "....L...L...L...........",
+      ".........L..............",
+      ".L..L....L..............",
+      ".........L..............",
+      "..L.....................",
+      ".........L.........L....",
+      "..........L.............",
+      ".............L..L.......",
+      "........................",
+      ".......L............L...",
+      "..L..........L........L.",
+      "........L...............",
+      "............L......L...L"
+    ],
+    "floor_decor": [
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        ",
+      "                        "
+    ],
+    "walls": [
+      "######WW#####WW#########",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "#                      #",
+      "########################"
+    ],
+    "above": []
+  },
+  "props": [
+    {
+      "name": "window_dish",
+      "sheet": "obs_props",
+      "pos": [
+        3.5,
+        1.75
+      ]
+    },
+    {
+      "name": "console_bank",
+      "sheet": "obs_props",
+      "pos": [
+        7.0,
+        4.6
+      ]
+    },
+    {
+      "name": "console_chair",
+      "sheet": "obs_props",
+      "pos": [
+        6.2,
+        5.4
+      ]
+    },
+    {
+      "name": "printer",
+      "sheet": "obs_props",
+      "pos": [
+        10.4,
+        4.5
+      ]
+    },
+    {
+      "name": "whiteboard",
+      "sheet": "obs_props",
+      "pos": [
+        11.5,
+        1.7
+      ]
+    },
+    {
+      "name": "rack_a",
+      "sheet": "obs_props",
+      "pos": [
+        16.0,
+        2.6
+      ]
+    },
+    {
+      "name": "rack_b",
+      "sheet": "obs_props",
+      "pos": [
+        17.2,
+        2.6
+      ]
+    },
+    {
+      "name": "office_door",
+      "sheet": "obs_props",
+      "pos": [
+        20.5,
+        1.95
+      ]
+    },
+    {
+      "name": "archive_shelf",
+      "sheet": "obs_props",
+      "pos": [
+        20.0,
+        8.6
+      ]
+    },
+    {
+      "name": "printout_overlay",
+      "sheet": "obs_printout",
+      "pos": [
+        14.0,
+        10.2
+      ],
+      "hidden": true,
+      "z_index": 50
+    }
+  ],
+  "markers": {
+    "obs_entry": [
+      12.0,
+      11.2
+    ],
+    "console": [
+      7.0,
+      5.6
+    ],
+    "office_door": [
+      20.5,
+      2.8
+    ],
+    "archive_shelf": [
+      20.0,
+      9.4
+    ],
+    "obs_center": [
+      12.0,
+      7.0
+    ]
+  },
+  "npcs": [
+    {
+      "actor_id": "metin",
+      "display_name": "Metin",
+      "frames": "metin",
+      "portrait": "metin",
+      "pos": [
+        15.4,
+        4.2
+      ],
+      "facing": "s"
+    },
+    {
+      "actor_id": "ebru",
+      "display_name": "Ebru",
+      "frames": "ebru",
+      "portrait": "ebru",
+      "pos": [
+        12.6,
+        6.4
+      ],
+      "facing": "w"
+    },
+    {
+      "actor_id": "tezcan",
+      "display_name": "Tezcan",
+      "frames": "tezcan",
+      "portrait": "tezcan",
+      "pos": [
+        20.5,
+        3.6
+      ],
+      "facing": "s"
+    }
+  ],
+  "player": {
+    "spawn": [
+      12.0,
+      11.2
+    ],
+    "facing": "n"
+  },
+  "exits": [
+    {
+      "id": "obs_door",
+      "pos": [
+        11,
+        12
+      ],
+      "size": [
+        2,
+        1
+      ]
+    }
+  ],
+  "edge_collision": false,
+  "night_tint": false
+}

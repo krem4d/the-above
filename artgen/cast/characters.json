@@ -1,0 +1,94 @@
+{
+  "notes": "Shared cast parameters — single source of truth consumed by BOTH sprites.cast_sheets and sprites.cast_portraits (M4). Generators read this file via the manifest's 'cast' path; they must never redefine these values locally, so sheets and portraits stay in agreement. Ramp references are <ramp>[<index>] into artgen/palettes/the_above.json (dark->light). Heights are art px within the 16x24 frame (cat: 16x16). Sources: story/characters.md, story/bible.md Act 1.",
+  "frame": { "adult": [16, 24], "cat": [16, 16] },
+  "characters": {
+    "hoca": {
+      "full_name": "Dr. Deniz Aydın",
+      "age": 47, "build": "lean, upright, unhurried", "height_px": 23,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "void[1]", "highlight": "stone[2]", "style": "short, neat, grey-flecked temples (stone[2] pixels at the sides)" },
+      "outfit": { "torso": "earth[2] wool coat over paper[2] shirt, coat edge earth[1]", "legs": "earth[1] trousers", "shoes": "earth[0]" },
+      "portrait": "tired kind eyes, faint stubble shadow (amber[0]), brows straight; moods: neutral / tired (lids heavier, slight slump) / wry (one brow up, mouth corner up) / listening (eyes up and off-frame right, mouth still)",
+      "moods": ["neutral", "tired", "wry", "listening"]
+    },
+    "yildiz": {
+      "full_name": "Yıldız", "species": "cat",
+      "age": "elderly", "build": "small, round-shouldered, tail usually up", "height_px": 10,
+      "coat": "tortoiseshell: base void[1], large patches earth[1], small patches amber[0], chest smudge paper[1]",
+      "eyes": "amber[2]",
+      "portrait": "head + chest, unimpressed half-lidded stare, one ear notched"
+    },
+    "fadime": {
+      "full_name": "Fadime", "role": "baker",
+      "age": 55, "build": "solid, capable forearms", "height_px": 22,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "earth[0]", "style": "covered by paper[2] yemeni headscarf, knotted at the side" },
+      "outfit": { "torso": "rose[1] dress, paper[2] flour-dusted apron", "legs": "rose[0] skirt to shoes", "shoes": "earth[0]" },
+      "portrait": "warm broad face, flour smudge on one cheek (paper[2])"
+    },
+    "musa": {
+      "full_name": "Musa", "role": "grocer (bakkal)",
+      "age": 45, "build": "stocky", "height_px": 22,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "void[1]", "style": "short, thick moustache (void[1])" },
+      "outfit": { "torso": "earth[1] knit vest over amber[1]... use paper[1] shirt instead (skin/shirt contrast), sleeves rolled", "legs": "stone[1] trousers", "shoes": "void[1]" },
+      "portrait": "moustache first, friendly squint"
+    },
+    "sukru": {
+      "full_name": "Şükrü", "role": "retired teacher, backgammon partner",
+      "age": 74, "build": "thin, slightly stooped (head 1px forward)", "height_px": 21,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "stone[3]", "style": "white, combed back, high forehead" },
+      "outfit": { "torso": "rose[0] cardigan over paper[1] shirt, buttoned", "legs": "stone[1] trousers", "shoes": "earth[0]" },
+      "portrait": "deep smile lines, glasses? no — bare, sharp pale eyes"
+    },
+    "elif": {
+      "full_name": "Elif", "role": "schoolgirl, keeper of the notebook",
+      "age": 11, "build": "small, forward-leaning, always about to ask", "height_px": 17,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "void[1]", "style": "high ponytail with rose[2] tie" },
+      "outfit": { "torso": "ship[2] school cardigan, paper[2] collar", "legs": "stone[1] skirt, ship[1] socks", "shoes": "void[1]", "accessory": "small earth[1] backpack visible from behind (walk_n frames)" },
+      "portrait": "big attentive eyes, mouth slightly open mid-question"
+    },
+    "kadir": {
+      "full_name": "Kadir", "role": "tea house owner",
+      "age": 58, "build": "barrel-chested", "height_px": 23,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "stone[2]", "style": "grey at sides, balding crown, grey moustache (stone[2])" },
+      "outfit": { "torso": "void[2] vest over paper[2] shirt, sleeves rolled, stone[0] waist apron", "legs": "void[1] trousers", "shoes": "void[1]" },
+      "portrait": "heavy brows, softest eyes in town, moustache hides the smile"
+    },
+    "ismet": {
+      "full_name": "İsmet", "role": "dolmuş driver",
+      "age": 48, "build": "wiry, sits even when standing", "height_px": 22,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "void[1]", "style": "under an earth[1] flat cap (kasket), brim earth[0]" },
+      "outfit": { "torso": "ship[1] work jacket half-zipped over paper[1] shirt", "legs": "stone[1] trousers", "shoes": "void[1]" },
+      "portrait": "cap low, one eye squinted from years of switchback sun, toothpick? no — keep clean"
+    },
+    "metin": {
+      "full_name": "Metin", "role": "observatory night operator",
+      "age": 58, "build": "heavy-set, deliberate", "height_px": 23,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "stone[2]", "style": "grey brush cut, grey stubble (stone[1] jaw pixels)" },
+      "outfit": { "torso": "ship[2] work shirt, earth[1] suspenders", "legs": "ship[1] trousers", "shoes": "void[1]" },
+      "portrait": "calm, jaw set, eyes that have watched racks for decades; he hums when the data is good"
+    },
+    "ebru": {
+      "full_name": "Ebru", "role": "PhD student",
+      "age": 27, "build": "quick, light", "height_px": 22,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "earth[0]", "style": "low ponytail over shoulder, loose strand at temple" },
+      "outfit": { "torso": "rose[1] oversized sweater, sleeves pushed up, paper[2] collar peeking", "legs": "void[1] jeans", "shoes": "rose[2] sneakers" },
+      "portrait": "bright, sleep-deprived, pencil behind ear (earth[2])"
+    },
+    "tezcan": {
+      "full_name": "Doç. Dr. Orhan Tezcan", "role": "observatory director",
+      "age": 63, "build": "square, careful", "height_px": 23,
+      "skin": "amber[1]", "skin_shade": "amber[0]",
+      "hair": { "color": "stone[2]", "style": "balding, grey sides, round stone[3] glasses" },
+      "outfit": { "torso": "stone[1] suit jacket, paper[2] shirt, rose[1] tie", "legs": "stone[1] trousers", "shoes": "void[1]" },
+      "portrait": "glasses catch the light (stone[3] lens pixels), unreadable administrator calm"
+    }
+  }
+}

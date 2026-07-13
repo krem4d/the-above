@@ -13,10 +13,13 @@ const ARRIVE_EPSILON := 1.0
 @export var actor_id: String = ""
 @export var display_name: String = ""   ## falls back to the raw actor_id if empty
 @export var portrait: Texture2D = null
+## Optional mood -> Texture2D overrides for `say ... mood=<mood>` (M4).
+## Only characters with authored mood portraits (hoca) populate this.
+@export var portrait_moods: Dictionary = {}
 
 @export var move_speed: float = 70.0
 
-var facing: String = "s":
+@export var facing: String = "s":
 	set(value):
 		if value not in ["n", "s", "e", "w"]:
 			push_warning("Actor: invalid facing %s" % value)
@@ -39,6 +42,16 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	if actor_id != "":
 		SceneDirector.unregister_actor(actor_id)
+
+
+## Portrait for a dialogue line: the mood override if one is authored,
+## else the neutral portrait (possibly null — the box hides the slot).
+func get_portrait(mood: String = "") -> Texture2D:
+	if mood != "" and portrait_moods.has(mood):
+		var override: Variant = portrait_moods[mood]
+		if override is Texture2D:
+			return override
+	return portrait
 
 
 ## Coroutine: walk in a straight line to `target` (global), then emit `arrived`.

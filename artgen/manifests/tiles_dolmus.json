@@ -1,0 +1,9 @@
+{
+  "generator": "tiles.dolmus_interior",
+  "comment": "M4 Ismet's dolmus interior: 2-tile sheet (bus_floor, bus_wall; 16x16 art baked 2x -> 32x32) + 5-prop sheet (window_valley strip, dashboard, seat_row, seat_single, bus_door). Golden hour on the switchbacks; stone/paper/rose/ship/earth/amber/void ramps, no signal.",
+  "seed": 19740611,
+  "art_cell": 16,
+  "scale": 2,
+  "out_tiles": "tiles/dolmus_sheet.png",
+  "out_props": "props/dolmus_props.png"
+}

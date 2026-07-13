@@ -13,7 +13,8 @@ goto_room obs
 teleport hoca obs_entry
 music obs_hum fade=2.0
 fade in 1.0
-say sys d1.obs.sys.001             # OBSERVER: _  (naming ritual; engine captures input, meta-persistent)
+say sys d1.obs.sys.001             # OBSERVER: _  (naming ritual)
+name_entry                         # engine captures typed input, meta-persistent (M4)
 say sys d1.obs.sys.002
 sfx metin_humming
 say metin d1.obs.metin.001
@@ -59,6 +60,7 @@ say hoca d1.obs.hoca.013
 fade out 1.5
 goto_room town
 teleport hoca home_door
+show night_tint                    # town after dark (M4: CanvasModulate prop in the town room)
 music taslica_night fade=2.0
 fade in 1.0
 pan sky 2.5
