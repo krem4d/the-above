@@ -11,4 +11,5 @@ say yildiz d7.home.yildiz.001
 say hoca d7.home.hoca.002
 say hoca d7.home.hoca.003
 mode free_roam
+mission m_d7_morning
 end_scene

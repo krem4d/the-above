@@ -53,6 +53,5 @@ say hoca d2.obs.hoca.008
 say sys d2.obs.sys.003             # NEW VERB: ANSWER — UNAVAILABLE. Dread by interface.
 say hoca d2.obs.hoca.009
 setflag d2_complete true
-mission m_d3_morning
 fade out 2.0
 end_scene

@@ -15,14 +15,17 @@ func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
 	if args.is_empty():
 		return
-	if args.has("--day1-probe"):
-		# In-game Day-1 end-to-end driver (see tools/day1_probe.gd) — runs
-		# inside the booted game because autoloads don't exist under a bare
-		# --script main loop.
+	if args.has("--day1-probe") or args.has("--day7-probe"):
+		# In-game end-to-end drivers (tools/day1_probe.gd drives Day 1;
+		# tools/day7_probe.gd drives the whole Act 1 arc to act1_complete) —
+		# they run inside the booted game because autoloads don't exist under a
+		# bare --script main loop.
 		if DisplayServer.get_name() != "headless":
 			get_window().size = CAPTURE_SIZE
 		await get_tree().process_frame
-		add_child((load("res://tools/day1_probe.gd") as GDScript).new())
+		var probe := "res://tools/day7_probe.gd" if args.has("--day7-probe") \
+			else "res://tools/day1_probe.gd"
+		add_child((load(probe) as GDScript).new())
 		return
 	var opts := _parse_args(args)
 	if not (opts.tour or opts.scene_id != ""):

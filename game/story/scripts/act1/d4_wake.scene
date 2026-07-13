@@ -11,4 +11,5 @@ move yildiz desk
 say yildiz d4.home.yildiz.001
 say hoca d4.home.hoca.003
 mode free_roam
+mission m_d4_morning
 end_scene

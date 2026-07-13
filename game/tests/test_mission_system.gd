@@ -65,3 +65,15 @@ func test_completion_flag_of_inactive_mission_does_nothing() -> void:
 	SceneDirector.current_mission_id = ""
 	GameState.set_flag("d1_left_home", true)
 	assert_str(SceneDirector.current_mission_id).is_equal("")
+
+
+func test_arming_mission_without_room_or_overlap_does_not_autocomplete() -> void:
+	# The arm-time standing-on-exit check (day-7 finale robustness) must no-op
+	# when there is no room / no overlap — only a real overlap may complete a
+	# freshly armed mission. The positive path (already standing on the exit)
+	# is the day7_probe's job; overlaps_body needs a live physics scene.
+	SceneDirector.current_room = null
+	SceneDirector.start_mission("m_d1_morning")
+	await get_tree().process_frame   # let the deferred arm-check run
+	assert_str(SceneDirector.current_mission_id).is_equal("m_d1_morning")
+	assert_bool(bool(GameState.get_flag("d1_left_home"))).is_false()

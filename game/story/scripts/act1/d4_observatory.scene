@@ -40,6 +40,5 @@ sfx tea_pour                       # Kadir opens early for him. Asks nothing. Po
 say kadir d4.town.kadir.003
 say hoca d4.town.hoca.006
 setflag d4_complete true
-mission m_d5_morning
 fade out 2.0
 end_scene

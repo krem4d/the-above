@@ -10,4 +10,5 @@ move yildiz kitchen_floor
 say yildiz d6.home.yildiz.001
 say hoca d6.home.hoca.002
 mode free_roam
+mission m_d6_morning
 end_scene

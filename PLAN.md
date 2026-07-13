@@ -28,9 +28,9 @@ self-contained minigame driven by the existing `spectro` DSL command before any 
 - [x] `SpectroOverlay` scene — shipped as `WaterfallView`/`WaterfallCanvas`
       (`game/scenes/minigames/`): scrolling waterfall over seeded noise, tuning input (align drift),
       sustained-proximity hold → reveal flags.
-- [~] Signal "events" carry horror payloads — `shape_burst` shipped (authored on `sig_long_call`);
-      the typed-name decode is implemented (`decode_text`) but **unauthored: conflicts with
-      secret-bible canon lock IX** (where the observer name may appear). Story-owner decision needed.
+- [x] Signal "events" carry horror payloads — `shape_burst` shipped (authored on `sig_long_call`). The
+      typed-name decode (`decode_text`) stays **permanently dormant** — canon lock IX resolved (2026-07-13):
+      the observer name never appears in Act 1. Capability remains implemented + tested, unauthored.
 - [~] Audio paths: `AudioStreamGenerator` on desktop; pre-baked crossfaded OGG loops on web —
       **deferred to the M6 audio pass** (AudioManager is still the wired-later stub; audiogen/ is M6).
 - [x] Wire `spectro <signal_id>` in `DialogueRunner` — blocks the coroutine, sets result flags, returns.
@@ -67,7 +67,11 @@ discovery → sleep.
 
 ## M5 — Full vertical-slice content (Days 2–7)
 
-All escalating Act 1 content against the already-authored scripts.
+All escalating Act 1 content against the already-authored scripts. **In progress** — decomposed into
+slices in [`docs/decisions/0003-m5-vertical-slice-decomposition.md`](docs/decisions/0003-m5-vertical-slice-decomposition.md);
+**M5.1 (Days 2–7 playable spine) is done** (arc plays start→`act1_complete`, `--day7-probe` PASS). The
+remaining work (staging: rooms + NPC art + markers; title/meta; anomalies; keystone polish; save-resume)
+maps onto the bullets below.
 
 **Build:**
 - [ ] Days 2–7 wired and playable: verification gauntlet (drift/nodding/RFI/microwave-peryton beat),

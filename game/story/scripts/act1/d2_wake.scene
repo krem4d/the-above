@@ -11,4 +11,5 @@ say hoca d2.home.hoca.001 mood=tired
 say yildiz d2.home.yildiz.001
 say hoca d2.home.hoca.002
 mode free_roam
+mission m_d2_morning
 end_scene

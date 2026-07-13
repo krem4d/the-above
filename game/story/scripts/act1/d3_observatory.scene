@@ -52,6 +52,5 @@ say hoca d3.obs.hoca.010
 say sys d3.obs.sys.010
 label sent
 setflag d3_complete true
-mission m_d4_morning
 fade out 2.0
 end_scene

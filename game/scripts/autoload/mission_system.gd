@@ -112,8 +112,43 @@ func _run_after_current_scene(scene_name: String) -> void:
 
 
 func _on_mission_changed(mission_id: String) -> void:
-	if mission_id != "" and MissionLibrary.get_mission(missions(), mission_id).is_empty():
+	if mission_id == "":
+		return
+	if MissionLibrary.get_mission(missions(), mission_id).is_empty():
 		push_warning("MissionSystem: unknown mission '%s' (not in %s)" % [mission_id, MISSIONS_PATH])
+		return
+	# A cutscene can leave the player already standing on an allowed exit — the
+	# Day-7 send-off walks Deniz onto the dolmuş stop before arming the launch.
+	# body_entered only fires on entry, so without this the mission never
+	# completes: a soft-lock at the emotional peak. Deferred so start_mission
+	# has finished setting mode and the physics overlap state is live, and
+	# because completion cascades into goto_room (frees collision objects),
+	# which is illegal inside a physics callback.
+	_complete_if_standing_on_allowed_exit.call_deferred(mission_id)
+
+
+## If the freshly-armed mission's player already overlaps one of its allowed
+## exit Area2Ds, trip it exactly as a body_entered would (see room.gd). No-op
+## when the player is not on an exit — only a real overlap completes.
+func _complete_if_standing_on_allowed_exit(mission_id: String) -> void:
+	if SceneDirector.current_mission_id != mission_id \
+			or SceneDirector.mode != SceneDirector.ControlMode.MISSION:
+		return
+	var room: Node = SceneDirector.current_room
+	var hoca: Node = SceneDirector.get_actor("hoca")
+	if room == null or hoca == null:
+		return
+	var triggers := room.get_node_or_null("Triggers")
+	if triggers == null:
+		return
+	var mission := current_mission_config()
+	if mission.is_empty():
+		return
+	for exit_id: String in mission["allowed_exits"]:
+		var trigger := triggers.get_node_or_null(exit_id)
+		if trigger is Area2D and (trigger as Area2D).overlaps_body(hoca):
+			on_exit_touched(exit_id)
+			return
 
 
 func _load_missions() -> Dictionary:

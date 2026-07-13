@@ -5,9 +5,10 @@ milestone (and whenever a checkbox flips). For **what to build next**, see [`PLA
 **how the project works**, see [`CLAUDE.md`](CLAUDE.md); the canonical master plan lives at
 `~/.claude/plans/i-want-to-develop-sunny-coral.md`.
 
-**Snapshot (2026-07-13):** M0, M1, M-STORY, M2, M3, **M4** complete. Next up: **M5 — Full
-vertical-slice content (Days 2–7)**. Public remote `krem4d/the-above`; M4 developed on
-`feat/m4-act1-world`, ff-merged to `master`.
+**Snapshot (2026-07-13):** M0, M1, M-STORY, M2, M3, **M4** complete. **M5 in progress** — slice
+**M5.1 (Days 2–7 playable spine) is done & verified**; the full 7-day arc now plays start→`act1_complete`.
+Decomposition + remaining slices in [`docs/decisions/0003-m5-vertical-slice-decomposition.md`](docs/decisions/0003-m5-vertical-slice-decomposition.md).
+Public remote `krem4d/the-above`.
 
 Legend: `[x]` done · `[~]` partial / in progress · `[ ]` not started
 
@@ -23,7 +24,7 @@ Legend: `[x]` done · `[~]` partial / in progress · `[ ]` not started
 | M2 | Core narrative systems + UI slice | ✅ complete |
 | M3 | Spectrogram (Waterfall) mechanic v1 | ✅ complete (audio + web-verify deferred, see below) |
 | M4 | Act 1 world & Day 1 playable | ✅ complete (Day 1 end-to-end; Days 2–7 wiring is M5) |
-| **M5** | **Full vertical-slice content (Days 2–7)** | ⬜ **next** |
+| **M5** | **Full vertical-slice content (Days 2–7)** | 🔄 **in progress** — M5.1 spine done; M5.S staging + M5.2–M5.5 remain |
 | M6 | Polish & itch demo | ⬜ pending |
 
 ---
@@ -148,14 +149,57 @@ items.
 
 ---
 
+## M5 — Full vertical-slice content (Days 2–7) 🔄
+
+Decomposition/handoff: [`docs/decisions/0003-m5-vertical-slice-decomposition.md`](docs/decisions/0003-m5-vertical-slice-decomposition.md).
+Survey finding: all 22 day scenes + 355 dialogue keys (EN+TR) already exist — M5 is **wiring + staging**,
+not writing. M5 is split into M5.1 (spine ✅), M5.S (staging), M5.2 (boot/finale), M5.3 (anomalies),
+M5.4 (keystone), M5.5 (save-resume + loc close-out).
+
+### M5.1 — Days 2–7 playable spine ✅
+
+- [x] **Wiring (11 edits):** `d2_wake`…`d7_wake` now arm their `m_dN_morning` (Bug A — the soft-lock);
+      the cross-day `mission m_d(N+1)_morning` armed after `setflag dN_complete` removed from
+      `d2/d3/d4/d5_observatory` + `d6_town` (Bug B — the M4 day-roll rule, applied arc-wide).
+- [x] **Finale robustness (`MissionSystem`):** arm-time overlap check completes a mission if the player
+      is already standing on an allowed exit (`d7_sendoff` walks Deniz onto the dolmuş stop before arming
+      `m_d7_launch`; `body_entered` never re-fires → was a finale soft-lock). Closes the logged
+      "armed while standing on the exit" item for the whole arc.
+- [x] **Regression firewall (3 lints in `test_act1_content_coverage.gd`):** every wake arms exactly its
+      morning mission; nothing but `fade`/`end_scene` after `setflag dN_complete`; every armed mission
+      exists in `act1.json`, resolves its `on_complete_script`, and is armed exactly once. Plus the loc
+      gate generalized to all 22 scenes, name-entry-exactly-once across the arc, and a guard test that the
+      arm-time check never over-fires.
+- [x] **Full-arc probe (`--day7-probe`, `tools/day7_probe.gd`):** drives `DayLoop.begin` → `act1_complete`.
+      **PASS** in 4784 frames, no stall, no script errors.
+- **Playable, not yet staged:** the arc plays because `goto_room` to a missing room leaves the player in the
+      previous valid room and every mission exit still resolves. Missing content degrades to no-op warnings.
+      Staging it is **M5.S** (below).
+
+### Remaining M5 slices (not started)
+
+- [ ] **M5.S staging** — build `obs_breakroom` / `ship_corridor` / `ship_corridor_seven`; place ~13 unplaced
+      NPCs (needs their walk-sheet art) + the absent markers/props Days 2–7 reference; then extend the
+      address-existence lint toward all 22 scenes. Biggest remaining chunk (carries NPC art generation).
+- [ ] **M5.2** boot & finale flow (cold_open → title → post_credit; `title_variant` meta trick, name-free per
+      the canon decision below). [ ] **M5.3** town-anomaly UX. [ ] **M5.4** keystone whiteboard polish
+      (needs `obs_breakroom`). [ ] **M5.5** `current_mission_id` save-resume + loc close-out.
+
+**Canon lock IX — resolved (hold the line, 2026-07-13):** the typed observer name never appears in Act 1
+(no title card, no decode). Reserved for save slots / phantom slot / the Act 3 inscription only. The spectro
+`decode_text` capability stays permanently dormant. This closes the M3/M4/M5 recurring question.
+
+---
+
 ## Test & verification status
 
 | Suite | Command | State |
 |---|---|---|
-| GdUnit4 engine logic (parser, runner, Locale, GameState, Save, Meta, SceneDirector, mission/day-loop, waterfall) — 18 suites | `make test` | ✅ green (151 cases) |
+| GdUnit4 engine logic (parser, runner, Locale, GameState, Save, Meta, SceneDirector, mission/day-loop, waterfall, act1-content lints) — 18 suites | `make test` | ✅ green (**155 cases**) |
 | Turkish casing safety (static grep-test) | `make test` | ✅ green |
 | artgen determinism + palette lint (pytest) | `make pytest` | ✅ green (8 cases) |
 | Day 1 end-to-end (`--day1-probe`, in-game driver under xvfb) | see M4 notes | ✅ PASS (10 beats) |
+| **Full Act 1 arc (`--day7-probe`, DayLoop.begin → `act1_complete`)** | `godot … -- --day7-probe` | ✅ **PASS** (4784 frames, no stall) |
 | Screenshot tour + Day-1 beats (visual review) | `make tour` / probe | ✅ captured under xvfb, all reviewed |
 | Web export browser gate (Chrome DevTools MCP) | manual | ⏳ re-verify pre-M6 |
 
@@ -163,30 +207,26 @@ items.
 
 ## Known open items (tracked, not bugs to reflex-fix)
 
-- **M5 blocker — wake scripts don't arm their morning mission.** `d2_wake`…`d7_wake` all end
-  `mode free_roam` / `end_scene` with no `mission m_dN_morning` (only `d1_wake` arms one). In FREE_ROAM
-  `on_exit_touched` is inert, so a player who reaches Day 2 has no way to progress. Fix in M5 as part of
-  making Days 2–7 playable: each wake script arms its day's morning mission before `end_scene`. (Surfaced
-  by the M4 adversarial review; out of M4 scope, which stops at Day 1.)
-- **M5 — end-of-day observatory tails must follow the `dN_complete` rule.** `d1_observatory` was fixed
-  (only `fade`/`end_scene` after `setflag d1_complete`); `d2_observatory`…`d7` tails should be audited
-  the same way when they go live, and `m_d7_sendoff` (armed while the player may already stand on the
-  `home_door` exit) needs a step-off/step-on or an immediate-completion check.
-- **M5 — autosave is not yet resumable.** `GameState.to_dict` persists `day`, `observer_name`,
+- **M5.S — staging debt (the next big rock).** The M4 room layouts hold only Day-1 NPCs/markers, so Days 2–7
+  reference **~13 unplaced NPCs** (ada, veli, tarik, husnu, havva, cemal, saniye, zeliha, osman, nurten,
+  ferit, ayse, …), **three missing rooms** (`obs_breakroom` — the keystone whiteboard; `ship_corridor` /
+  `ship_corridor_seven` — the cold-open/post-credit bookends), and many absent markers/props (roadside,
+  break_room, landline, barber_door, degirmen_street, dish_view, whiteboard, saniye_door, …). The arc plays
+  regardless (missing targets no-op), but it is visually empty. Building this (incl. NPC walk-sheet art) is
+  M5.S; then extend `test_..._only_address_things_that_exist` from Day-1 toward all 22 scenes.
+- **M5.5 — autosave is not yet resumable.** `GameState.to_dict` persists `day`, `observer_name`,
   `current_room_id`, and flags, but **not** `SceneDirector.current_mission_id`; a continue-from-save
-  (M5 slot UI) must also restore the active mission. Dormant today — no load path exists yet.
-- **PLAN.md M3 vs canon lock IX:** PLAN's "a burst decodes to the player's typed name" is
-  implemented as the `decode_text` event capability but deliberately not authored anywhere —
-  secret-bible canon lock IX enumerates the only places the observer name may appear, and a
-  spectro decode is not one of them. Either amend the canon lock or drop the bullet; until then
-  the capability stays dormant (tested, documented in the manifest notes).
-- `game/project.godot` currently shows uncommitted — a Godot-editor re-save that reordered sections
-  and dropped three keys equal to engine defaults (`text_to_speech`, `stretch/aspect`,
-  `locale/fallback`); effective config unchanged. Decide whether to commit the normalized form.
+  (M5.2 slot UI) must also restore the active mission. Dormant today — no load path exists yet.
 - **Accepted save/meta gaps** (documented inline): narrow crash window between a save's rename and its
   generation-counter bump; an `int` flag can return as `float` after a save/load round-trip. Both
   low-probability, dormant, no content exercises them yet.
 - **Web export gate** not re-run since M1 — must pass again before the M6 itch demo.
+
+**Resolved in M5.1** (2026-07-13): ~~wake scripts don't arm their morning mission~~ (all wakes now arm,
+lint-enforced); ~~end-of-day tails must follow the `dN_complete` rule + `m_d7_sendoff` standing-on-exit~~
+(Bug B removed arc-wide + lint; arm-time overlap check completes any mission armed while standing on its
+exit); ~~PLAN M3 vs canon lock IX~~ (resolved: hold the line — `decode_text` permanently dormant);
+~~`project.godot` shows uncommitted~~ (working tree clean).
 
 ---
 

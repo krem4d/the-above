@@ -47,6 +47,5 @@ say hoca d6.town.hoca.006
 label head_up
 say hoca d6.town.hoca.007          # he sleeps at the observatory; the composition pulls him skyward
 setflag d6_complete true
-mission m_d7_morning
 fade out 2.0
 end_scene
